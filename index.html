@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mayteck C.S. | Creative Sites & Smarter Systems</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            /* The "Blue to Teal" Gradient */
+            --brand-gradient: linear-gradient(135deg, #0000ff 0%, #06b6d4 100%);
+            --primary-blue: #0000ff;
+            --teal: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text-main: #334155;
+            --text-muted: #64748b;
+        }
+
+        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text-main); line-height: 1.6; background: var(--light); }
+        h1, h2, h3 { margin: 0; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; }
+        
+        /* --- UTILITIES --- */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        
+        .btn { 
+            display: inline-block; 
+            padding: 14px 28px; 
+            background: var(--brand-gradient); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 50px; /* Modern pill shape */
+            font-weight: 600; 
+            box-shadow: 0 4px 15px rgba(0, 0, 255, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 255, 0.4); }
+
+        /* --- HERO SECTION (With Video) --- */
+        header { 
+            position: relative; 
+            height: 80vh; 
+            min-height: 500px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            color: white; 
+            overflow: hidden;
+        }
+
+        /* Video Background */
+        .hero-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            object-fit: cover; z-index: 1; opacity: 1;
+        }
+        
+        /* Gradient Overlay - distinct "Blue/Teal" wash */
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(135deg, rgba(0,0,255,0.8), rgba(6,182,212,0.7)); 
+            z-index: 2; 
+            backdrop-filter: blur(2px); /* Slight blur makes text pop */
+        }
+
+        .hero-content { position: relative; z-index: 3; max-width: 700px; padding: 20px; }
+        
+        .status-badge { 
+            background: rgba(255,255,255,0.15); 
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ffffff; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            font-weight: 600; 
+            display: inline-block; 
+            margin-bottom: 20px; 
+            backdrop-filter: blur(5px);
+        }
+
+        header h1 { font-size: 3rem; margin-bottom: 15px; color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        header p { font-size: 1.25rem; color: #e2e8f0; margin-bottom: 30px; font-weight: 300; }
+
+        /* --- SERVICES GRID --- */
+        .services { padding: 80px 0; background: white; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2rem; margin-bottom: 10px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        
+        .card { 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 16px; 
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); 
+            transition: transform 0.2s; 
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--teal); }
+        
+        .icon-box { 
+            width: 50px; height: 50px; 
+            background: var(--brand-gradient); 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .icon-box svg { fill: white; width: 24px; height: 24px; }
+        
+        .card h3 { margin-bottom: 12px; font-size: 1.25rem; }
+        .card p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* --- AI DEMO SECTION --- */
+        .ai-section { background: var(--dark); padding: 80px 0; color: white; text-align: center; }
+        .ai-box { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 20px; 
+            padding: 40px; 
+            max-width: 600px; 
+            margin: 0 auto; 
+        }
+        
+        .mic-btn { 
+            width: 80px; height: 80px; 
+            border-radius: 50%; 
+            background: var(--brand-gradient);
+            border: 5px solid rgba(255,255,255,0.1); 
+            cursor: pointer; 
+            margin: 30px auto; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: all 0.3s;
+        }
+        .mic-btn:hover { transform: scale(1.05); }
+        .mic-btn svg { width: 32px; height: 32px; fill: white; }
+        
+        /* Animation for "Listening" state */
+        .pulsing { animation: pulse-ring 2s infinite; background: #ef4444; /* Red when active/recording */ }
+
+        /* --- FOOTER --- */
+        footer { background: white; border-top: 1px solid #e2e8f0; padding: 40px 0; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+        footer a { color: var(--primary-blue); text-decoration: none; font-weight: 600; }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
+            <source src="assets/hero-video.mp4" type="video/mp4">
+        </video>
+        
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content container">
+            <span class="status-badge">Serving 92649 & North Orange County</span>
+            <h1>Digital Solutions for<br>Local Business</h1>
+            <p>I build systems that work so you can focus on running your shop.</p>
+            <a href="#contact" class="btn">Get a Quote</a>
+        </div>
+    </header>
+
+    <section class="services container">
+        <div class="section-header">
+            <h2>Simplified IT Services</h2>
+            <p style="color: var(--text-muted);">No confusing jargon. Just results.</p>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm5 10v-2h6v2H9zm-3-4V8h12v4H6z"/></svg>
+                </div>
+                <h3>Web Design</h3>
+                <p>Modern, mobile-friendly websites that showcase your business. I focus on speed and clear design to turn visitors into customers.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <h3>Local SEO</h3>
+                <p>Dominate the "Near Me" searches. I optimize your Google Maps presence and site structure so locals find you before they find the competition.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon-box">
+                    <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+                </div>
+                <h3>Smart Systems</h3>
+                <p>From rock-solid WiFi coverage to neat cabling and POS setup. I handle the hardware so your physical location runs as smoothly as your website.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-section">
+        <div class="container">
+            <div class="ai-box">
+                <h2>Experience the Future</h2>
+                <p style="color: #cbd5e1; margin-top: 10px;">
+                    Imagine an AI receptionist that handles calls while you're busy. 
+                    <br><strong>Tap the mic to test the prototype.</strong>
+                </p>
+                
+                <div class="mic-btn" id="micBtn" onclick="toggleMic()">
+                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                </div>
+                
+                <p id="statusText" style="font-size: 0.9rem; color: #94a3b8;">Status: Ready to Listen</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <p><strong>Mayteck C.S.</strong> &bull; Founded by Michael May</p>
+            <p>Huntington Beach, CA (92649)</p>
+            <p><a href="mailto:michael@mayteckcs.com">Contact for a Quote</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // --- SIMPLE UI LOGIC ---
+        // This handles the button animation. 
+        // The real WebSocket connection will go here later.
+        
+        let isListening = false;
+        const micBtn = document.getElementById('micBtn');
+        const statusText = document.getElementById('statusText');
+
+        function toggleMic() {
+            if (!isListening) {
+                // START MOCKUP
+                isListening = true;
+                micBtn.classList.add('pulsing');
+                statusText.innerText = "Listening... (Audio Bridge Required)";
+                statusText.style.color = "#ef4444";
+            } else {
+                // STOP MOCKUP
+                isListening = false;
+                micBtn.classList.remove('pulsing');
+                statusText.innerText = "Status: Ready to Listen";
+                statusText.style.color = "#94a3b8";
+            }
+        }
+    </script>
+</body>
+</html>
