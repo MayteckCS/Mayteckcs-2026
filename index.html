@@ -102,32 +102,34 @@
         @media (max-width: 600px) { .chat-window { width: 300px; height: 400px; bottom: 80px; } }
 
                 /* --- DARK MODE SUPPORT --- */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Flip the base colors */
-                --light: #0b1120;       /* Very dark blue/black background */
-                --dark: #f8fafc;        /* White text for headers */
-                --text-main: #e2e8f0;   /* Light gray text */
-                --text-muted: #94a3b8;  /* Muted text */
-                
-                /* Chat Widget Dark Colors */
-                --chat-bg: #1e293b;
-                --chat-bubble-ai: #334155;
-            }
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light: #0b1120;       
+        --dark: #f8fafc;        
+        --text-main: #e2e8f0;   
+        --text-muted: #94a3b8;  
+        
+        --chat-bg: #1e293b;
+        --chat-bubble-ai: #334155;
+    }
 
-            /* Fix white cards to be dark */
-            .card, .services, .chat-window, .chat-input-area, .chat-input, .chat-messages {
-                background: #1e293b; 
-                border-color: #334155;
-                color: var(--text-main);
-            }
+    .card, .services, .chat-window, .chat-input-area, .chat-input, .chat-messages {
+        background: #1e293b; 
+        border-color: #334155;
+        color: var(--text-main);
+    }
 
-            /* Fix Mic Button background in chat */
-            .icon-btn.mic-btn {
-                background: rgba(255,255,255,0.05);
-                border-radius: 50%;
-            }
-        }
+    .icon-btn.mic-btn {
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+
+    /* --- FIX: Force Footer to stay Dark --- */
+    footer {
+        background: #020617 !important; /* Extremely dark blue/black */
+        border-top: 1px solid #1e293b;
+    }
+ }
 
     </style>
 </head>
@@ -144,7 +146,7 @@
             </span>
             <h1 id="hero-title">Loading...</h1>
             <p id="hero-desc">Loading...</p>
-            <a href="#contact" class="btn">Get a Quote</a>
+            <a href="mailto:mm@mayteckcs.com?subject=Project Quote Request" class="btn">Get a Quote</a>
         </div>
     </header>
 
@@ -203,19 +205,25 @@
                 location: "Huntington Beach, CA (92649)"
             },
             services: [
-                {
-                    title: "Web Design",
-                    desc: "Modern, mobile-first websites. We focus on speed and clarity to turn visitors into foot traffic."
-                },
-                {
-                    title: "Local SEO",
-                    desc: "Dominate 'Near Me' searches. We optimize Google Maps and site structure so locals find you first."
-                },
-                {
-                    title: "Smart Systems",
-                    desc: "WiFi, Cabling, and POS setup. We handle the hardware so your physical location runs smoothly."
-                }
-            ],
+    {
+        title: "Web Design",
+        desc: "Modern, mobile-first websites. We focus on speed and clarity to turn visitors into foot traffic.",
+        // Added Icon Path
+        icon: '<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm5 10v-2h6v2H9zm-3-4V8h12v4H6z"/>'
+    },
+    {
+        title: "Local SEO",
+        desc: "Dominate 'Near Me' searches. We optimize Google Maps and site structure so locals find you first.",
+        // Added Icon Path
+        icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>'
+    },
+    {
+        title: "Smart Systems",
+        desc: "WiFi, Cabling, and POS setup. We handle the hardware so your physical location runs smoothly.",
+        // Added Icon Path
+        icon: '<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>'
+    }
+],
             // AI PERSONALITY SETTINGS
             aiSettings: {
                 tone: "Friendly, Professional, SoCal Vibe (Chill but competent).",
@@ -230,12 +238,19 @@
         document.getElementById('contact-info').innerHTML = `${siteConfig.contact.location}<br><a href="tel:${siteConfig.contact.phone}">${siteConfig.contact.phone}</a> &bull; <a href="mailto:${siteConfig.contact.email}">${siteConfig.contact.email}</a>`;
 
         const serviceGrid = document.getElementById('services-grid');
-        siteConfig.services.forEach(s => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.innerHTML = `<h3>${s.title}</h3><p>${s.desc}</p>`;
-            serviceGrid.appendChild(div);
-        });
+siteConfig.services.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    // Now we render the icon-box structure again
+    div.innerHTML = `
+        <div class="icon-box" style="width: 50px; height: 50px; background: var(--brand-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+            <svg viewBox="0 0 24 24" style="fill: white; width: 24px; height: 24px;">${s.icon}</svg>
+        </div>
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+    `;
+    serviceGrid.appendChild(div);
+});
 
         // --- 3. GENERATE AI SYSTEM PROMPT ---
         // This function creates the "Brain" for the AI based on the config above.
