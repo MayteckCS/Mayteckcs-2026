@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mayteck C.S. | Systems & Design</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
@@ -113,7 +117,7 @@
         --chat-bubble-ai: #334155;
     }
 
-    .card, .services, .chat-window, .chat-input-area, .chat-input, .chat-messages {
+    .services, .chat-window, .chat-input-area, .chat-input, .chat-messages {
         background: #1e293b; 
         border-color: #334155;
         color: var(--text-main);
@@ -130,11 +134,80 @@
         border-top: 1px solid #1e293b;
     }
  }
+    /* --- ADD THIS: TOP MENU BAR STYLES --- */
+.navbar {
+    position: absolute; /* Sits on top of the video */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 100; /* Ensures it stays above the video overlay */
+    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); /* Subtle fade for readability */
+}
 
+.nav-logo {
+    height: 50px; /* Constrained height */
+    width: auto;
+}
+
+.nav-text {
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    line-height: 1.2;
+}
+
+.nav-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.nav-subtitle {
+    font-size: 0.8rem;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.9;
+    color: #06b6d4; /* Teal accent for the subtitle */
+}
+
+/* --- UPDATE THIS: SERVICE CARDS (Make them Blue) --- */
+/* Find the existing .card rule and REPLACE it with this: */
+.card { 
+    background: linear-gradient(145deg, #1e3a8a, #172554); /* Deep Tech Blue */
+    color: white; /* Force text to white for contrast */
+    padding: 35px; 
+    border-radius: 16px; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    box-shadow: 0 10px 30px -10px rgba(0,0,100,0.2); 
+    transition: transform 0.2s; 
+}
+
+/* Ensure the paragraph text inside cards is readable (light gray/blue) */
+.card p {
+    color: #dbeafe !important; /* Very light blue text */
+}
+
+/* Ensure the card title uses Orbitron to match branding */
+.card h3 {
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+}
     </style>
 </head>
 <body>
-
+    <nav class="navbar">
+    <img src="assets/mayeckCS_logo.png" alt="Mayteck Logo" class="nav-logo">
+    
+    <div class="nav-text">
+        <h1 class="nav-title">Mayteck C.S.</h1>
+        <p class="nav-subtitle">Creative Sites & Smarter Solutions</p>
+    </div>
+</nav>
     <header>
         <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
             <source src="assets/hero-video.mp4" type="video/mp4">
