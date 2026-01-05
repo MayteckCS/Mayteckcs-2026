@@ -39,22 +39,33 @@
 
         /* --- HERO --- */
         header { 
-            position: relative; height: 60vh; min-height: 400px; display: flex; 
+            position: relative;
+            height: 60vh;
+            min-height: 400px;
+            display: flex; 
             align-items: center; justify-content: center; text-align: center; color: white; overflow: hidden;
         }
-        .hero-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,255,0.9), rgba(6,182,212,0.8)); z-index: 2; backdrop-filter: blur(2px); }
+        .hero-video { position: absolute;
+                     top: 0;
+                     left: 0;
+                     width: 100%;
+                     height: 100%;
+                     object-fit: cover;
+                     z-index: 1; }
+        .hero-overlay { position: absolute;
+                       top: 0;
+                       left: 0;
+                       width: 100%;
+                       height: 100%;
+                       background: linear-gradient(135deg, rgba(0,0,255,0.9), rgba(6,182,212,0.8));
+                       z-index: 2;
+                       backdrop-filter: blur(2px); }
         .hero-content { position: relative; z-index: 3; max-width: 800px; padding: 20px; }
         
         header h1 { font-size: 3.5rem; margin-bottom: 15px; color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
         /* --- SERVICES --- */
-        .services { 
-            padding: 80px 0;
-            background: white;
-            position: relative;
-        z-index: 2;
-                  }
+        .services { padding: 80px 0; background: white; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;}
         .card { background: #fff; padding: 35px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
         
@@ -65,8 +76,6 @@
         color: #94a3b8;
         padding: 60px 0 30px 0; /* More spacing on top, less on bottom */
         text-align: center;
-        position: relative;
-        z-index: 2;
     }
 
     /* Ensure links in the footer (email/phone) stand out */
@@ -74,29 +83,14 @@
         color: #06b6d4; /* Teal color */
         text-decoration: none;
         transition: color 0.2s;
-        position: relative;
-        z-index: 2;
     }
     footer a:hover {
         color: #ffffff;
-        text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
-        position: relative;
-        z-index: 2;/* Glowing effect on hover */
+        text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); /* Glowing effect on hover */
     }
 
         /* --- HYBRID CHAT WIDGET --- */
-        .chat-widget-container 
-        { 
-            position: relative;
-            bottom: 25px;
-            right: 25px;
-            z-index: 2;
-            display: flex;
-            flex-direction:
-            column;
-            align-items:
-            flex-end; 
-        }
+        .chat-widget-container { position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
 
         /* Chat Window */
         .chat-window {
@@ -212,27 +206,6 @@
     opacity: 0.9;
     color: #06b6d4; /* Teal accent for the subtitle */
 }
-        /* --- NEW: RIGHT-SIDE MENU LINKS --- */
-.nav-links {
-    margin-left: auto; /* This pushes the links to the far right */
-    display: flex;
-    gap: 25px;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    transition: color 0.2s;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.nav-links a:hover {
-    color: #06b6d4; /* Teal Hover */
-}
 
 /* --- UPDATE THIS: SERVICE CARDS (Make them Blue) --- */
 /* Find the existing .card rule and REPLACE it with this: */
@@ -261,16 +234,15 @@
 <body>
     <nav class="navbar">
     <img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo">
-    
     <div class="nav-text">
         <h1 class="nav-title">Mayteck C.S.</h1>
         <p class="nav-subtitle">Creative Sites & Smarter Solutions</p>
     </div>
+
     <div class="nav-links">
         <a href="index.html">HOME</a>
-        <a href="index2025.html" target="_blank">CLASSIC SITE</a>
+        <a href="index2025.html" target="_blank">classic</a>
     </div>
-        
 </nav>
     <header>
         <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
