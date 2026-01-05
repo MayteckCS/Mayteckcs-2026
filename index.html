@@ -7,7 +7,7 @@
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
-            /* The "Blue to Teal" Gradient */
+            /* Corporate Gradient: Blue to Teal */
             --brand-gradient: linear-gradient(135deg, #0000ff 0%, #06b6d4 100%);
             --primary-blue: #0000ff;
             --teal: #06b6d4;
@@ -21,26 +21,28 @@
         h1, h2, h3 { margin: 0; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; }
         
         /* --- UTILITIES --- */
-        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
         
         .btn { 
             display: inline-block; 
-            padding: 14px 28px; 
+            padding: 12px 28px; 
             background: var(--brand-gradient); 
             color: white; 
             text-decoration: none; 
-            border-radius: 50px; /* Modern pill shape */
+            border-radius: 50px; 
             font-weight: 600; 
             box-shadow: 0 4px 15px rgba(0, 0, 255, 0.3);
             transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 0, 255, 0.4); }
 
-        /* --- HERO SECTION (With Video) --- */
+        /* --- HERO SECTION --- */
         header { 
             position: relative; 
-            height: 80vh; 
-            min-height: 500px;
+            height: 85vh; 
+            min-height: 550px;
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -49,21 +51,9 @@
             overflow: hidden;
         }
 
-        /* Video Background */
-        .hero-video {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            object-fit: cover; z-index: 1; opacity: 1;
-        }
-        
-        /* Gradient Overlay - distinct "Blue/Teal" wash */
-        .hero-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(135deg, rgba(0,0,255,0.8), rgba(6,182,212,0.7)); 
-            z-index: 2; 
-            backdrop-filter: blur(2px); /* Slight blur makes text pop */
-        }
-
-        .hero-content { position: relative; z-index: 3; max-width: 700px; padding: 20px; }
+        .hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,255,0.85), rgba(6,182,212,0.75)); z-index: 2; backdrop-filter: blur(2px); }
+        .hero-content { position: relative; z-index: 3; max-width: 800px; padding: 20px; }
         
         .status-badge { 
             background: rgba(255,255,255,0.15); 
@@ -74,23 +64,27 @@
             font-size: 0.85rem; 
             font-weight: 600; 
             display: inline-block; 
-            margin-bottom: 20px; 
+            margin-bottom: 25px; 
             backdrop-filter: blur(5px);
         }
 
-        header h1 { font-size: 3rem; margin-bottom: 15px; color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        header p { font-size: 1.25rem; color: #e2e8f0; margin-bottom: 30px; font-weight: 300; }
+        header h1 { font-size: 3.5rem; margin-bottom: 15px; color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); line-height: 1.1; }
+        header p { font-size: 1.25rem; color: #e2e8f0; margin-bottom: 35px; font-weight: 300; }
+        
+        /* Contact Bar in Header */
+        .header-contact { margin-top: 20px; font-size: 0.9rem; color: rgba(255,255,255,0.8); }
+        .header-contact a { color: white; text-decoration: none; margin: 0 10px; font-weight: 500; }
 
         /* --- SERVICES GRID --- */
         .services { padding: 80px 0; background: white; }
         .section-header { text-align: center; margin-bottom: 60px; }
-        .section-header h2 { font-size: 2rem; margin-bottom: 10px; }
+        .section-header h2 { font-size: 2.2rem; margin-bottom: 10px; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
         
         .card { 
             background: #fff; 
-            padding: 30px; 
+            padding: 35px; 
             border-radius: 16px; 
             border: 1px solid #f1f5f9;
             box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); 
@@ -103,48 +97,102 @@
             background: var(--brand-gradient); 
             border-radius: 12px; 
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         .icon-box svg { fill: white; width: 24px; height: 24px; }
         
-        .card h3 { margin-bottom: 12px; font-size: 1.25rem; }
-        .card p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* --- AI DEMO SECTION --- */
-        .ai-section { background: var(--dark); padding: 80px 0; color: white; text-align: center; }
-        .ai-box { 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 20px; 
-            padding: 40px; 
-            max-width: 600px; 
-            margin: 0 auto; 
-        }
-        
-        .mic-btn { 
-            width: 80px; height: 80px; 
-            border-radius: 50%; 
-            background: var(--brand-gradient);
-            border: 5px solid rgba(255,255,255,0.1); 
-            cursor: pointer; 
-            margin: 30px auto; 
-            display: flex; align-items: center; justify-content: center; 
-            transition: all 0.3s;
-        }
-        .mic-btn:hover { transform: scale(1.05); }
-        .mic-btn svg { width: 32px; height: 32px; fill: white; }
-        
-        /* Animation for "Listening" state */
-        .pulsing { animation: pulse-ring 2s infinite; background: #ef4444; /* Red when active/recording */ }
+        .card h3 { margin-bottom: 15px; font-size: 1.4rem; }
+        .card p { color: var(--text-muted); font-size: 1rem; }
 
         /* --- FOOTER --- */
-        footer { background: white; border-top: 1px solid #e2e8f0; padding: 40px 0; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
-        footer a { color: var(--primary-blue); text-decoration: none; font-weight: 600; }
+        footer { background: var(--dark); padding: 60px 0 40px; text-align: center; color: #94a3b8; }
+        footer h3 { color: white; margin-bottom: 20px; }
+        footer p { margin: 5px 0; }
+        footer a { color: var(--teal); text-decoration: none; }
+        footer .legal { margin-top: 40px; font-size: 0.8rem; opacity: 0.6; }
 
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+        /* --- FLOATING CHAT WIDGET --- */
+        .chat-widget-container {
+            position: fixed; bottom: 25px; right: 25px; z-index: 1000;
+            display: flex; flex-direction: column; align-items: flex-end;
+        }
+
+        /* The Chat Window (Hidden by default) */
+        .chat-window {
+            background: white;
+            width: 320px;
+            height: 400px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+            transform-origin: bottom right;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            
+            /* Hidden State */
+            opacity: 0; pointer-events: none; transform: scale(0.8) translateY(20px);
+        }
+        
+        .chat-window.active { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
+
+        .chat-header {
+            background: var(--brand-gradient);
+            padding: 20px;
+            color: white;
+        }
+        .chat-header h4 { margin: 0; font-size: 1.1rem; }
+        .chat-header p { margin: 5px 0 0; font-size: 0.85rem; opacity: 0.9; }
+
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            display: flex; flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: #f8fafc;
+        }
+
+        /* The Toggle Button (Circle) */
+        .chat-toggle {
+            width: 65px; height: 65px;
+            border-radius: 50%;
+            background: var(--brand-gradient);
+            box-shadow: 0 4px 15px rgba(0,0,255,0.4);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .chat-toggle:hover { transform: scale(1.05); }
+        .chat-toggle svg { fill: white; width: 30px; height: 30px; }
+
+        /* Mic Button Inside Chat */
+        .widget-mic-btn {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #e2e8f0;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-top: 20px;
+            transition: all 0.2s;
+        }
+        .widget-mic-btn svg { width: 30px; height: 30px; fill: var(--primary-blue); }
+        .widget-mic-btn.pulsing { background: #fee2e2; border-color: #ef4444; animation: pulse-red 1.5s infinite; }
+        .widget-mic-btn.pulsing svg { fill: #ef4444; }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5rem; }
+            .chat-window { width: 300px; height: 350px; }
         }
     </style>
 </head>
@@ -157,11 +205,19 @@
         
         <div class="hero-overlay"></div>
 
-        <div class="hero-content container">
-            <span class="status-badge">Serving 92649 & North Orange County</span>
+        <div class="hero-content">
+            <span class="status-badge">Available for Projects in 92649</span>
             <h1>Digital Solutions for<br>Local Business</h1>
-            <p>I build systems that work so you can focus on running your shop.</p>
-            <a href="#contact" class="btn">Get a Quote</a>
+            <p>We build systems that work so you can focus on your customers.</p>
+            
+            <div>
+                <a href="#contact" class="btn">Start a Project</a>
+            </div>
+
+            <div class="header-contact">
+                <a href="tel:7144654690">(714) 465-4690</a> &bull; 
+                <a href="mailto:mm@mayteckcs.com">mm@mayteckcs.com</a>
+            </div>
         </div>
     </header>
 
@@ -177,7 +233,7 @@
                     <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm5 10v-2h6v2H9zm-3-4V8h12v4H6z"/></svg>
                 </div>
                 <h3>Web Design</h3>
-                <p>Modern, mobile-friendly websites that showcase your business. I focus on speed and clear design to turn visitors into customers.</p>
+                <p>We create modern, mobile-friendly websites that showcase your business. Our designs focus on speed and clarity to turn visitors into foot traffic.</p>
             </div>
 
             <div class="card">
@@ -185,7 +241,7 @@
                     <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
                 </div>
                 <h3>Local SEO</h3>
-                <p>Dominate the "Near Me" searches. I optimize your Google Maps presence and site structure so locals find you before they find the competition.</p>
+                <p>Dominate the "Near Me" searches. We optimize your Google Maps presence and site structure so locals find you before they find the competition.</p>
             </div>
 
             <div class="card">
@@ -193,58 +249,78 @@
                     <svg viewBox="0 0 24 24"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
                 </div>
                 <h3>Smart Systems</h3>
-                <p>From rock-solid WiFi coverage to neat cabling and POS setup. I handle the hardware so your physical location runs as smoothly as your website.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="ai-section">
-        <div class="container">
-            <div class="ai-box">
-                <h2>Experience the Future</h2>
-                <p style="color: #cbd5e1; margin-top: 10px;">
-                    Imagine an AI receptionist that handles calls while you're busy. 
-                    <br><strong>Tap the mic to test the prototype.</strong>
-                </p>
-                
-                <div class="mic-btn" id="micBtn" onclick="toggleMic()">
-                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-                </div>
-                
-                <p id="statusText" style="font-size: 0.9rem; color: #94a3b8;">Status: Ready to Listen</p>
+                <p>From rock-solid WiFi coverage to structured cabling and POS setup. We handle the hardware infrastructure so your physical location runs smoothly.</p>
             </div>
         </div>
     </section>
 
     <footer id="contact">
         <div class="container">
-            <p><strong>Mayteck C.S.</strong> &bull; Founded by Michael May</p>
+            <h3>Mayteck C.S.</h3>
             <p>Huntington Beach, CA (92649)</p>
-            <p><a href="mailto:michael@mayteckcs.com">Contact for a Quote</a></p>
+            <p><strong>(714) 465-4690</strong></p>
+            <p><a href="mailto:mm@mayteckcs.com">mm@mayteckcs.com</a></p>
+            <div class="legal">
+                &copy; 2025 Mayteck Creative Sites & Smarter Systems. All rights reserved.
+            </div>
         </div>
     </footer>
 
-    <script>
-        // --- SIMPLE UI LOGIC ---
-        // This handles the button animation. 
-        // The real WebSocket connection will go here later.
+    <div class="chat-widget-container">
         
-        let isListening = false;
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h4>Mayteck Support</h4>
+                <p>Ask our AI agent about our services.</p>
+            </div>
+            <div class="chat-body">
+                <p style="color: var(--text-muted); font-size: 0.9rem;">
+                    "Hi, I'm the Mayteck AI. How can I help you today?"
+                </p>
+                
+                <div class="widget-mic-btn" id="micBtn" onclick="toggleMic()">
+                     <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+                </div>
+                <p id="statusText" style="margin-top: 15px; font-size: 0.8rem; color: #cbd5e1;">Tap mic to speak</p>
+            </div>
+        </div>
+
+        <div class="chat-toggle" onclick="toggleChat()">
+            <svg id="icon-msg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+        </div>
+
+    </div>
+
+    <script>
+        // --- WIDGET LOGIC ---
+        const chatWindow = document.getElementById('chatWindow');
         const micBtn = document.getElementById('micBtn');
         const statusText = document.getElementById('statusText');
+        let isOpen = false;
+        let isListening = false;
+
+        function toggleChat() {
+            isOpen = !isOpen;
+            if (isOpen) {
+                chatWindow.classList.add('active');
+            } else {
+                chatWindow.classList.remove('active');
+                // Reset mic if closed
+                isListening = false;
+                micBtn.classList.remove('pulsing');
+            }
+        }
 
         function toggleMic() {
             if (!isListening) {
-                // START MOCKUP
                 isListening = true;
                 micBtn.classList.add('pulsing');
-                statusText.innerText = "Listening... (Audio Bridge Required)";
+                statusText.innerText = "Listening... (Simulated)";
                 statusText.style.color = "#ef4444";
             } else {
-                // STOP MOCKUP
                 isListening = false;
                 micBtn.classList.remove('pulsing');
-                statusText.innerText = "Status: Ready to Listen";
+                statusText.innerText = "Tap mic to speak";
                 statusText.style.color = "#94a3b8";
             }
         }
