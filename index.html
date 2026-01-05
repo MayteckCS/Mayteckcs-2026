@@ -54,8 +54,24 @@
         .card { background: #fff; padding: 35px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
         
         /* --- FOOTER --- */
-        footer { background: var(--dark); padding: 60px 0; text-align: center; color: #94a3b8; }
-        footer a { color: var(--teal); text-decoration: none; }
+        /* --- FOOTER REFINEMENTS --- */
+    footer {
+        background: #0f172a; /* Force dark background always */
+        color: #94a3b8;
+        padding: 60px 0 30px 0; /* More spacing on top, less on bottom */
+        text-align: center;
+    }
+
+    /* Ensure links in the footer (email/phone) stand out */
+    footer a {
+        color: #06b6d4; /* Teal color */
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+    footer a:hover {
+        color: #ffffff;
+        text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); /* Glowing effect on hover */
+    }
 
         /* --- HYBRID CHAT WIDGET --- */
         .chat-widget-container { position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
