@@ -207,6 +207,42 @@
     color: #06b6d4; /* Teal accent for the subtitle */
 }
 
+/* 1. Push the links to the far right */
+.nav-links {
+    margin-left: auto; /* This acts like a spring, pushing links to the right edge */
+    display: flex;
+    gap: 20px; /* Space between the two buttons */
+    padding-right: 20px; /* Safety buffer from the edge of the screen */
+}
+
+/* 2. The "Stunning" Pill Buttons (Ghost Style) */
+.nav-links a {
+    text-decoration: none; /* Kills the blue underline */
+    color: #ffffff; /* White text to match the overlay */
+    font-family: 'Orbitron', sans-serif; /* Matches your Logo font */
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    /* The Pill Shape */
+    padding: 10px 25px;
+    border: 2px solid rgba(255, 255, 255, 0.7); /* Subtle white border */
+    border-radius: 50px;
+    background: rgba(0, 0, 0, 0.2); /* Very slight tint for readability */
+    backdrop-filter: blur(4px); /* "Frosted Glass" effect */
+    transition: all 0.3s ease;
+}
+
+/* 3. Hover Effect (The "Glow Up") */
+.nav-links a:hover {
+    background: #ffffff; /* Button fills with white */
+    color: #000000; /* Text turns black */
+    border-color: #ffffff;
+    transform: translateY(-2px); /* Slight lift */
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); /* Teal glow (matches your subtitle color) */
+}
+
 /* --- UPDATE THIS: SERVICE CARDS (Make them Blue) --- */
 /* Find the existing .card rule and REPLACE it with this: */
 .card { 
@@ -241,7 +277,7 @@
 
     <div class="nav-links">
         <a href="index.html">HOME</a>
-        <a href="index2025.html" target="_blank">classic</a>
+        <a href="https://legacy.mayteckcs.com" target="_blank">classic</a>
     </div>
 </nav>
     <header>
