@@ -282,6 +282,48 @@
                 min-height: 350px; /* Allow header to be slightly shorter on small screens */
             }
         }
+        /* --- FINAL MOBILE POLISH (Paste at bottom of <style>) --- */
+        
+        /* 1. The "Anti-Wobble" Fix (CRITICAL) */
+        * { box-sizing: border-box; }
+        html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
+
+        /* 2. Mobile-Specific Tweaks */
+        @media (max-width: 768px) {
+            
+            /* Fix the Hero Text Sizing */
+            header h1 {
+                font-size: 2.0rem; /* Perfect size for mobile reading */
+                line-height: 1.1;
+                margin-bottom: 15px;
+            }
+            
+            /* Fix the Container Width */
+            .hero-content {
+                width: 100%;
+                padding-top: 100px; /* Clears the navbar */
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            /* Fix the Navbar "Crowding" */
+            .navbar {
+                padding: 10px 15px; /* Shrink padding so it fits */
+                justify-content: space-between; /* Push logo and button apart */
+            }
+            
+            /* Shrink the Logo slightly */
+            .nav-logo { height: 40px; }
+            .nav-title { font-size: 1.2rem; }
+            .nav-subtitle { display: none; } /* Hide tagline on mobile to save space */
+            
+            /* Shrink the HOME button */
+            .nav-links a {
+                padding: 6px 15px; /* Smaller pill */
+                font-size: 0.75rem;
+                border-width: 1px;
+            }
+        }
     </style>
 </head>
 <body>
