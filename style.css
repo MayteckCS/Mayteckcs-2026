@@ -255,34 +255,16 @@
     color: white;
 }
         /* --- MOBILE HERO FIXES --- */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.2rem; /* Shrinks the huge text */
-                line-height: 1.1;  /* Tightens the spacing */
-                margin-bottom: 20px;
-            }
-            .hero-content {
-                /* Pushes content down so the transparent menu doesn't cover it */
-                padding-top: 80px; 
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-            header {
-                min-height: 350px; /* Allow header to be slightly shorter on small screens */
-            }
-        }
-        /* --- FINAL MOBILE POLISH (Paste at bottom of <style>) --- */
-        
-        /* 1. The "Anti-Wobble" Fix (CRITICAL) */
-        * { box-sizing: border-box; }
-        html, body { overflow-x: hidden; width: 100%; margin: 0; padding: 0; }
-
         /* 2. Mobile-Specific Tweaks */
+        /* 2. Mobile-Specific Tweaks (The Master List) */
         @media (max-width: 768px) {
             
+            /* Safety: Ensure video header stays tall enough */
+            header { min-height: 350px; }
+
             /* Fix the Hero Text Sizing */
             header h1 {
-                font-size: 2.0rem; /* Perfect size for mobile reading */
+                font-size: 2.0rem; 
                 line-height: 1.1;
                 margin-bottom: 15px;
             }
@@ -290,27 +272,44 @@
             /* Fix the Container Width */
             .hero-content {
                 width: 100%;
-                padding-top: 100px; /* Clears the navbar */
+                padding-top: 100px; 
                 padding-left: 20px;
                 padding-right: 20px;
             }
 
             /* Fix the Navbar "Crowding" */
             .navbar {
-                padding: 10px 15px; /* Shrink padding so it fits */
-                justify-content: space-between; /* Push logo and button apart */
+                padding: 10px 10px; /* Tighter edge padding */
+                justify-content: space-between; 
+                flex-wrap: wrap; /* Safety: allows wrapping if screen is TINY */
+                overflow-x: hidden; /* STOP THE SIDE SCROLL */
+            }
+
+            .nav-links {
+                gap: 5px; /* Squeeze buttons closer together */
+                margin-left: auto; /* Keep pushing right */
+                padding-right: 0;
             }
             
             /* Shrink the Logo slightly */
-            .nav-logo { height: 40px; }
-            .nav-title { font-size: 1.2rem; }
-            .nav-subtitle { display: none; } /* Hide tagline on mobile to save space */
+            .nav-logo { height: 35px; }
+            .nav-title { font-size: 1.0rem; }
+            .nav-subtitle { display: none; } 
             
-            /* Shrink the HOME button */
-            .nav-links a {
-                padding: 6px 15px; /* Smaller pill */
-                font-size: 0.75rem;
+            /* Shrink links AND the Dropdown Button */
+            .nav-links a, .dropbtn {
+                padding: 6px 10px !important; /* Smaller pill padding */
+                font-size: 0.70rem !important; /* Smaller text */
                 border-width: 1px;
+                min-width: auto; /* Prevent fixed widths */
+            }
+            
+            /* Fix the dropdown menu position on mobile */
+            .dropdown-content {
+                min-width: 150px; /* Slightly narrower menu */
+                left: auto; 
+                right: 0; /* Align right edge with button */
+                transform: none; /* Remove centering transform */
             }
         }
 
