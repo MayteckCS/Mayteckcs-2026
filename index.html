@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="style.css">
     <style>
         /* --- RESET & VARIABLES --- */
         :root {
@@ -243,6 +244,99 @@
     box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); /* Teal glow (matches your subtitle color) */
 }
 
+/* --- 2026 GLASS DROPDOWN --- */
+
+/* 1. Container needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 2. The "Services" Button (Matches your link style) */
+.dropbtn {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 10px 25px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for the main button */
+.dropdown:hover .dropbtn {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+}
+
+/* 3. The Hidden Menu (The Dropdown itself) */
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; /* Pushes it right below the button */
+    left: 50%;
+    transform: translateX(-50%); /* Centers it */
+    background: rgba(15, 23, 42, 0.95); /* Dark background for readability */
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 10px 0;
+    z-index: 1000;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-top: 10px; /* Slight gap */
+}
+
+/* 4. The Links inside the menu */
+.dropdown-content a {
+    color: #e2e8f0;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-family: -apple-system, system-ui, sans-serif; /* Cleaner font for lists */
+    font-size: 0.9rem;
+    text-transform: none; /* Easier to read */
+    border: none; /* Remove the pill border from these inner links */
+    background: none; /* Remove pill background */
+    text-align: center;
+}
+
+/* Hover effect for inner links */
+.dropdown-content a:hover {
+    background: rgba(6, 182, 212, 0.2); /* Teal tint */
+    color: #ffffff;
+    box-shadow: none;
+    transform: none;
+    border: none;
+}
+
+/* 5. Show the menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+/* --- THE INVISIBLE BRIDGE FIX --- */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    /* Move this invisible block UP to cover the gap */
+    top: -15px; 
+    left: 0;
+    width: 100%;
+    height: 15px; /* Height of the gap */
+    background: transparent; /* Keep it invisible */
+    display: block;
+}
+/* Small animation for smoothness */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
 /* --- UPDATE THIS: SERVICE CARDS (Make them Blue) --- */
 /* Find the existing .card rule and REPLACE it with this: */
 .card { 
@@ -335,8 +429,18 @@
     </div>
 
     <div class="nav-links">
-        <a href="#">HOME</a>
+    <a href="index.html">HOME</a>
+    
+    <div class="dropdown">
+        <button class="dropbtn">SERVICES ▾</button>
+        <div class="dropdown-content">
+            <a href="web-design.html">Web Design</a>
+            <a href="local-seo.html">Local SEO</a>
+            <a href="#">Smart Systems</a> </div>
     </div>
+
+    <a href="#contact">CONTACT</a>
+</div>
 </nav>
     <header>
         <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
@@ -421,25 +525,25 @@
                 location: "Huntington Beach, CA (92649)"
             },
             services: [
-    {
-        title: "Web Design",
-        desc: "Modern, mobile-first websites. We focus on speed and clarity to turn visitors into foot traffic.",
-        // Added Icon Path
-        icon: '<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm5 10v-2h6v2H9zm-3-4V8h12v4H6z"/>'
-    },
-    {
-        title: "Local SEO",
-        desc: "Dominate 'Near Me' searches. We optimize Google Maps and site structure so locals find you first.",
-        // Added Icon Path
-        icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>'
-    },
-    {
-        title: "Smart Systems",
-        desc: "WiFi, Cabling, and POS setup. We handle the hardware so your physical location runs smoothly.",
-        // Added Icon Path
-        icon: '<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>'
-    }
-],
+                {
+                    // This turns the title into a clickable link
+                    title: "<a href='web-design.html' style='color:inherit; text-decoration:none;'>Web Design</a>",
+                    desc: "Modern, mobile-first websites. We focus on speed and clarity to turn visitors into foot traffic.",
+                    icon: '<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm5 10v-2h6v2H9zm-3-4V8h12v4H6z"/>'
+                },
+                {
+                    // This turns the title into a clickable link
+                    title: "<a href='local-seo.html' style='color:inherit; text-decoration:none;'>Local SEO</a>",
+                    desc: "Dominate 'Near Me' searches. We optimize Google Maps and site structure so locals find you first.",
+                    icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>'
+                },
+                {
+                    // We leave this one alone for now since you don't have the page yet
+                    title: "Smart Systems",
+                    desc: "WiFi, Cabling, and POS setup. We handle the hardware so your physical location runs smoothly.",
+                    icon: '<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>'
+                }
+            ],
             // AI PERSONALITY SETTINGS
             aiSettings: {
                 tone: "Friendly, Professional, SoCal Vibe (Chill but competent).",
