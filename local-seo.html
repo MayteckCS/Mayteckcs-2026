@@ -4,24 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Local SEO Services & Google Maps Ranking | Mayteck C.S.</title>
-<meta name="description" content="Dominate 'near me' searches and rank #1 on Google Maps. We optimize your Google Business Profile and local keywords to drive real foot traffic and calls.">
+    <meta name="description" content="Dominate 'near me' searches and rank #1 on Google Maps. We optimize your Google Business Profile and local keywords to drive real foot traffic and calls.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
 
-    <div class="nav-links">
-        <a href="index.html">HOME</a>
+    <nav class="navbar">
+        <a href="index.html"><img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo"></a>
         
-        <div class="dropdown">
-            <button class="dropbtn">SERVICES ▾</button>
-            <div class="dropdown-content">
-                <a href="web-design.html">Web Design</a>
-                <a href="local-seo.html">Local SEO</a>
-                <a href="smart-systems.html">Smart Systems</a>
-            </div>
+        <div class="nav-text">
+            <h1 class="nav-title">Mayteck C.S.</h1>
+            <p class="nav-subtitle">Local SEO Division</p>
         </div>
+    
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn">SERVICES ▾</button>
+                <div class="dropdown-content">
+                    <a href="web-design.html">Web Design</a>
+                    <a href="local-seo.html">Local SEO</a>
+                    <a href="smart-systems.html">Smart Systems</a>
+                </div>
+            </div>
+    
+            <a href="javascript:void(0)" onclick="openModal()" style="text-decoration: none; color: white; font-weight: 700; font-family: 'Orbitron', sans-serif;">CONTACT</a>
+        </div>
+    </nav>
 
     <header style="height: 50vh; min-height: 350px;">
         <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
@@ -29,9 +41,9 @@
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-    <h1 style="font-size: 3rem;">Own Your Territory.</h1>
-    <p>Whether you're in LA or NY, your customers are searching for "services near me." We ensure you are the first name they see, pushing your competitors down the list.</p>
-    <a href="javascript:void(0)" onclick="openModal()" class="btn">Start Your Project</a>
+            <h1 style="font-size: 3rem;">Own Your Territory.</h1>
+            <p>Whether you're in LA or NY, your customers are searching for "services near me." We ensure you are the first name they see, pushing your competitors down the list.</p>
+            <a href="javascript:void(0)" onclick="openModal()" class="btn">Start Your Project</a>
         </div>
     </header>
 
@@ -61,71 +73,3 @@
             </div>
         </div>
     </section>
-
-    <footer id="audit">
-        <div class="container">
-            <h3 style="font-family: 'Orbitron', sans-serif; color: white;">Get Found Online</h3>
-            <p style="margin: 20px 0;">Send us your URL and we'll send you a video audit of your current ranking.</p>
-            <a href="javascript:void(0)" onclick="openModal()" class="btn">Request Audit</a>
-            
-            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
-            <div class="legal" style="font-size: 0.85rem; color: #64748b;">
-                <span>&copy; 2026 Mayteck C.S.</span>
-            </div>
-        </div>
-    </footer>
-<div id="quoteModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal(event)">&times;</span>
-            
-            <h2 style="font-family: 'Orbitron', sans-serif; margin-bottom: 10px;">Start Your Project</h2>
-            <p style="margin-bottom: 20px; font-size: 0.9rem; color: #64748b;">Tell us what you need. We usually reply within 2 hours.</p>
-    
-            <form action="https://formsubmit.co/mm@mayteckcs.com" method="POST">
-                <input type="text" name="_honey" style="display:none">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://mayteckcs.com/local-seo.html">
-    
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" required placeholder="John Doe">
-                </div>
-    
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required placeholder="john@company.com">
-                </div>
-    
-                <div class="form-group">
-                    <label>Project Type</label>
-                    <select name="service">
-                        <option value="Web Design">Web Design</option>
-                        <option value="Local SEO">Local SEO</option>
-                        <option value="IT/Systems">IT & Systems</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <label>Details</label>
-                    <textarea name="message" rows="3" placeholder="Tell us about your project..." required></textarea>
-                </div>
-    
-                <button type="submit" class="btn" style="width: 100%; border: none; margin-top: 10px;">Send Request</button>
-            </form>
-        </div>
-    </div>
-
-    <script>
-        function openModal() {
-            document.getElementById('quoteModal').classList.add('active');
-        }
-
-        function closeModal(e) {
-            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('close-modal')) {
-                document.getElementById('quoteModal').classList.remove('active');
-            }
-        }
-    </script>
-</body>
-</html>

@@ -1,485 +1,180 @@
-        /* --- RESET & VARIABLES --- */
-        :root {
-            --brand-gradient: linear-gradient(135deg, #0000ff 0%, #06b6d4 100%);
-            --primary-blue: #0000ff;
-            --teal: #06b6d4;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --text-main: #334155;
-            --text-muted: #64748b;
-            --chat-bg: #ffffff;
-            --chat-bubble-user: #0000ff;
-            --chat-bubble-ai: #f1f5f9;
-        }
+/* --- RESET & VARIABLES --- */
+:root {
+    --brand-gradient: linear-gradient(135deg, #0000ff 0%, #06b6d4 100%);
+    --primary-blue: #0000ff;
+    --teal: #06b6d4;
+    --dark: #0f172a;
+    --light: #f8fafc;
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --chat-bg: #ffffff;
+    --chat-bubble-user: #0000ff;
+    --chat-bubble-ai: #f1f5f9;
+}
 
-        body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text-main); line-height: 1.6; background: var(--light); }
-        h1, h2, h3 { margin: 0; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; }
-        ul { list-style: none; padding: 0; }
+/* --- 1. THE NUCLEAR SCROLL FIX --- */
+html, body { 
+    width: 100%; 
+    max-width: 100%; 
+    overflow-x: hidden !important; /* This stops the side-scroll wiggle */
+    position: relative; 
+    margin: 0; 
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    color: var(--text-main); 
+    line-height: 1.6; 
+    background: var(--light); 
+}
 
-        /* --- UTILITIES --- */
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        
-        .btn { 
-            display: inline-block; padding: 12px 28px; background: var(--brand-gradient); 
-            color: white; text-decoration: none; border-radius: 50px; font-weight: 600; 
-            box-shadow: 0 4px 15px rgba(0, 0, 255, 0.3); transition: transform 0.2s; border: none; cursor: pointer;
-        }
-        .btn:hover { transform: translateY(-2px); }
+h1, h2, h3 { margin: 0; font-weight: 800; color: var(--dark); letter-spacing: -0.5px; }
+ul { list-style: none; padding: 0; }
 
-        /* --- HERO --- */
-        header { 
-            position: relative;
-            height: 60vh;
-            min-height: 400px;
-            display: flex; 
-            align-items: center; justify-content: center; text-align: center; color: white; overflow: hidden;
-        }
-        .hero-video { position: absolute;
-                     top: 0;
-                     left: 0;
-                     width: 100%;
-                     height: 100%;
-                     object-fit: cover;
-                     z-index: 1; }
-        .hero-overlay { position: absolute;
-                       top: 0;
-                       left: 0;
-                       width: 100%;
-                       height: 100%;
-                       background: linear-gradient(135deg, rgba(0,0,255,0.9), rgba(6,182,212,0.8));
-                       z-index: 2;
-                       backdrop-filter: blur(2px); }
-        .hero-content { position: relative; z-index: 3; max-width: 800px; padding: 20px; }
-        
-        header h1 { font-size: 3.5rem; margin-bottom: 15px; color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        
-        /* --- SERVICES --- */
-        .services { padding: 80px 0; background: white; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;}
-        .card { background: #fff; padding: 35px; border-radius: 16px; border: 1px solid #f1f5f9; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); }
-        
-        /* --- FOOTER --- */
-        /* --- FOOTER REFINEMENTS --- */
-    footer {
-        background: #0f172a; /* Force dark background always */
-        color: #94a3b8;
-        padding: 60px 0 30px 0; /* More spacing on top, less on bottom */
-        text-align: center;
-    }
+/* --- UTILITIES --- */
+.container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
-    /* Ensure links in the footer (email/phone) stand out */
-    footer a {
-        color: #06b6d4; /* Teal color */
-        text-decoration: none;
-        transition: color 0.2s;
-    }
-    footer a:hover {
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); /* Glowing effect on hover */
-    }
+.btn { 
+    display: inline-block; padding: 12px 28px; background: var(--brand-gradient); 
+    color: white; text-decoration: none; border-radius: 50px; font-weight: 600; 
+    box-shadow: 0 4px 15px rgba(0, 0, 255, 0.3); transition: transform 0.2s; border: none; cursor: pointer;
+}
+.btn:hover { transform: translateY(-2px); }
 
-        /* --- HYBRID CHAT WIDGET --- */
-        .chat-widget-container { position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
+/* --- HERO --- */
+header { 
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    display: flex; 
+    align-items: center; justify-content: center; text-align: center; color: white; overflow: hidden;
+}
+.hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(0,0,255,0.9), rgba(6,182,212,0.8)); z-index: 2; backdrop-filter: blur(2px); }
+.hero-content { position: relative; z-index: 3; max-width: 800px; padding: 20px; }
+header h1 { font-size: 3.5rem; margin-bottom: 15px; color: white; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
 
-        /* Chat Window */
-        .chat-window {
-            background: var(--chat-bg); width: 350px; height: 500px; border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2); margin-bottom: 15px; display: flex; flex-direction: column;
-            overflow: hidden; transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-            opacity: 0; pointer-events: none; transform: scale(0.8) translateY(20px);
-            border: 1px solid #e2e8f0;
-        }
-        .chat-window.active { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
-
-        .chat-header { background: var(--brand-gradient); padding: 15px 20px; color: white; flex-shrink: 0; }
-        .chat-header h4 { margin: 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-        .status-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; }
-
-        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 15px; }
-        
-        /* Bubbles */
-        .msg { max-width: 80%; padding: 10px 15px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; }
-        .msg.ai { align-self: flex-start; background: var(--chat-bubble-ai); color: var(--text-main); border-bottom-left-radius: 2px; }
-        .msg.user { align-self: flex-end; background: var(--chat-bubble-user); color: white; border-bottom-right-radius: 2px; }
-
-        /* Input Area */
-        .chat-input-area { padding: 15px; border-top: 1px solid #e2e8f0; background: white; display: flex; align-items: center; gap: 10px; }
-        .chat-input { flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 20px; outline: none; font-size: 0.9rem; }
-        .chat-input:focus { border-color: var(--primary-blue); }
-        
-        .icon-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 5px; transition: color 0.2s; display: flex; align-items: center; }
-        .icon-btn:hover { color: var(--primary-blue); }
-        .icon-btn svg { width: 20px; height: 20px; fill: currentColor; }
-        
-        .mic-btn.active { color: #ef4444; animation: pulse 1.5s infinite; }
-
-        /* Toggle Button */
-        .chat-toggle {
-            width: 60px; height: 60px; border-radius: 50%; background: var(--brand-gradient);
-            box-shadow: 0 4px 15px rgba(0,0,255,0.4); display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s;
-        }
-        .chat-toggle:hover { transform: scale(1.05); }
-        .chat-toggle svg { fill: white; width: 28px; height: 28px; }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-        
-        @media (max-width: 600px) { .chat-window { width: 300px; height: 400px; bottom: 80px; } }
-
-                /* --- DARK MODE SUPPORT --- */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --light: #0b1120;       
-        --dark: #f8fafc;        
-        --text-main: #e2e8f0;   
-        --text-muted: #94a3b8;  
-        
-        --chat-bg: #1e293b;
-        --chat-bubble-ai: #334155;
-    }
-
-    .services, .chat-window, .chat-input-area, .chat-input, .chat-messages {
-        background: #1e293b; 
-        border-color: #334155;
-        color: var(--text-main);
-    }
-
-    .icon-btn.mic-btn {
-        background: rgba(255,255,255,0.05);
-        border-radius: 50%;
-    }
-
-    /* --- FIX: Force Footer to stay Dark --- */
-    footer {
-        background: #020617 !important; /* Extremely dark blue/black */
-        border-top: 1px solid #1e293b;
-    }
- }
-    /* --- ADD THIS: TOP MENU BAR STYLES --- */
+/* --- NAVBAR (Glass Style) --- */
 .navbar {
-    position: absolute; /* Sits on top of the video */
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 100; /* Ensures it stays above the video overlay */
-    background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); /* Subtle fade for readability */
+    position: absolute; top: 0; left: 0; width: 100%; padding: 15px 20px; display: flex; align-items: center; gap: 15px; z-index: 100; background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent); box-sizing: border-box; /* Fix for padding width */
 }
-
-.nav-logo {
-    height: 50px; /* Constrained height */
-    width: auto;
-}
-
-.nav-text {
-    font-family: 'Orbitron', sans-serif;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    line-height: 1.2;
-}
-
-.nav-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-    letter-spacing: 1px;
-}
-
-.nav-subtitle {
-    font-size: 0.8rem;
-    font-weight: 400;
-    margin: 0;
-    opacity: 0.9;
-    color: #06b6d4; /* Teal accent for the subtitle */
-}
-
-/* 1. Push the links to the far right */
-.nav-links {
-    margin-left: auto; /* This acts like a spring, pushing links to the right edge */
-    display: flex;
-    gap: 20px; /* Space between the two buttons */
-    padding-right: 20px; /* Safety buffer from the edge of the screen */
-}
-
-/* 2. The "Stunning" Pill Buttons (Ghost Style) */
+.nav-logo { height: 50px; width: auto; }
+.nav-text { font-family: 'Orbitron', sans-serif; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); line-height: 1.2; }
+.nav-title { font-size: 1.5rem; font-weight: 700; margin: 0; letter-spacing: 1px; }
+.nav-subtitle { font-size: 0.8rem; font-weight: 400; margin: 0; opacity: 0.9; color: #06b6d4; }
+.nav-links { margin-left: auto; display: flex; gap: 20px; padding-right: 20px; }
 .nav-links a {
-    text-decoration: none; /* Kills the blue underline */
-    color: #ffffff; /* White text to match the overlay */
-    font-family: 'Orbitron', sans-serif; /* Matches your Logo font */
-    font-weight: 700;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    
-    /* The Pill Shape */
-    padding: 10px 25px;
-    border: 2px solid rgba(255, 255, 255, 0.7); /* Subtle white border */
-    border-radius: 50px;
-    background: rgba(0, 0, 0, 0.2); /* Very slight tint for readability */
-    backdrop-filter: blur(4px); /* "Frosted Glass" effect */
-    transition: all 0.3s ease;
+    text-decoration: none; color: #ffffff; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; padding: 10px 25px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 50px; background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(4px); transition: all 0.3s ease;
 }
-
-/* 3. Hover Effect (The "Glow Up") */
 .nav-links a:hover {
-    background: #ffffff; /* Button fills with white */
-    color: #000000; /* Text turns black */
-    border-color: #ffffff;
-    transform: translateY(-2px); /* Slight lift */
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); /* Teal glow (matches your subtitle color) */
+    background: #ffffff; color: #000000; border-color: #ffffff; transform: translateY(-2px); box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
 }
 
-/* --- UPDATE THIS: SERVICE CARDS (Make them Blue) --- */
-/* Find the existing .card rule and REPLACE it with this: */
+/* --- SERVICES & CARDS --- */
+.services { padding: 80px 0; background: white; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px;}
 .card { 
-    background: linear-gradient(145deg, #1e3a8a, #172554); /* Deep Tech Blue */
-    color: white; /* Force text to white for contrast */
-    padding: 35px; 
-    border-radius: 16px; 
-    border: 1px solid rgba(255,255,255,0.1); 
-    box-shadow: 0 10px 30px -10px rgba(0,0,100,0.2); 
-    transition: transform 0.2s; 
+    background: linear-gradient(145deg, #1e3a8a, #172554); color: white; padding: 35px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px -10px rgba(0,0,100,0.2); transition: transform 0.2s; 
+}
+.card p { color: #dbeafe !important; }
+.card h3 { font-family: 'Orbitron', sans-serif; color: white; }
+
+/* --- FOOTER --- */
+footer { background: #0f172a; color: #94a3b8; padding: 60px 0 30px 0; text-align: center; }
+footer a { color: #06b6d4; text-decoration: none; transition: color 0.2s; }
+footer a:hover { color: #ffffff; text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
+
+/* --- CHAT WIDGET --- */
+.chat-widget-container { position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
+.chat-window {
+    background: var(--chat-bg); width: 350px; height: 500px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); margin-bottom: 15px; display: flex; flex-direction: column; overflow: hidden; transform-origin: bottom right; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); opacity: 0; pointer-events: none; transform: scale(0.8) translateY(20px); border: 1px solid #e2e8f0;
+}
+.chat-window.active { opacity: 1; pointer-events: all; transform: scale(1) translateY(0); }
+.chat-header { background: var(--brand-gradient); padding: 15px 20px; color: white; flex-shrink: 0; }
+.chat-header h4 { margin: 0; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.status-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; display: inline-block; }
+.chat-messages { flex: 1; padding: 20px; overflow-y: auto; background: #f8fafc; display: flex; flex-direction: column; gap: 15px; }
+.msg { max-width: 80%; padding: 10px 15px; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; }
+.msg.ai { align-self: flex-start; background: var(--chat-bubble-ai); color: var(--text-main); border-bottom-left-radius: 2px; }
+.msg.user { align-self: flex-end; background: var(--chat-bubble-user); color: white; border-bottom-right-radius: 2px; }
+.chat-input-area { padding: 15px; border-top: 1px solid #e2e8f0; background: white; display: flex; align-items: center; gap: 10px; }
+.chat-input { flex: 1; padding: 10px; border: 1px solid #e2e8f0; border-radius: 20px; outline: none; font-size: 0.9rem; }
+.chat-input:focus { border-color: var(--primary-blue); }
+.icon-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); padding: 5px; transition: color 0.2s; display: flex; align-items: center; }
+.icon-btn:hover { color: var(--primary-blue); }
+.icon-btn svg { width: 20px; height: 20px; fill: currentColor; }
+.mic-btn.active { color: #ef4444; animation: pulse 1.5s infinite; }
+.chat-toggle {
+    width: 60px; height: 60px; border-radius: 50%; background: var(--brand-gradient); box-shadow: 0 4px 15px rgba(0,0,255,0.4); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s;
+}
+.chat-toggle:hover { transform: scale(1.05); }
+.chat-toggle svg { fill: white; width: 28px; height: 28px; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+/* --- DARK MODE SUPPORT --- */
+@media (prefers-color-scheme: dark) {
+    :root { --light: #0b1120; --dark: #f8fafc; --text-main: #e2e8f0; --text-muted: #94a3b8; --chat-bg: #1e293b; --chat-bubble-ai: #334155; }
+    .services, .chat-window, .chat-input-area, .chat-input, .chat-messages { background: #1e293b; border-color: #334155; color: var(--text-main); }
+    .icon-btn.mic-btn { background: rgba(255,255,255,0.05); border-radius: 50%; }
+    footer { background: #020617 !important; border-top: 1px solid #1e293b; }
 }
 
-/* Ensure the paragraph text inside cards is readable (light gray/blue) */
-.card p {
-    color: #dbeafe !important; /* Very light blue text */
+/* --- MOBILE TWEAKS (Consolidated Master List) --- */
+@media (max-width: 768px) {
+    header { min-height: 350px; }
+    header h1 { font-size: 2.0rem; line-height: 1.1; margin-bottom: 15px; }
+    .hero-content { width: 100%; padding-top: 100px; padding-left: 20px; padding-right: 20px; }
+    .navbar { padding: 10px 10px; justify-content: space-between; flex-wrap: wrap; overflow-x: hidden; }
+    .nav-links { gap: 5px; margin-left: auto; padding-right: 0; }
+    .nav-logo { height: 35px; }
+    .nav-title { font-size: 1.0rem; }
+    .nav-subtitle { display: none; }
+    .nav-links a, .dropbtn { padding: 6px 10px !important; font-size: 0.70rem !important; border-width: 1px; min-width: auto; }
+    .dropdown-content { min-width: 150px; left: auto; right: 0; transform: none; }
+    /* Chat resize */
+    .chat-window { width: 300px; height: 400px; bottom: 80px; }
 }
 
-/* Ensure the card title uses Orbitron to match branding */
-.card h3 {
-    font-family: 'Orbitron', sans-serif;
-    color: white;
-}
-        /* --- MOBILE HERO FIXES --- */
-        /* 2. Mobile-Specific Tweaks */
-        /* 2. Mobile-Specific Tweaks (The Master List) */
-        @media (max-width: 768px) {
-            
-            /* Safety: Ensure video header stays tall enough */
-            header { min-height: 350px; }
-
-            /* Fix the Hero Text Sizing */
-            header h1 {
-                font-size: 2.0rem; 
-                line-height: 1.1;
-                margin-bottom: 15px;
-            }
-            
-            /* Fix the Container Width */
-            .hero-content {
-                width: 100%;
-                padding-top: 100px; 
-                padding-left: 20px;
-                padding-right: 20px;
-            }
-
-            /* Fix the Navbar "Crowding" */
-            .navbar {
-                padding: 10px 10px; /* Tighter edge padding */
-                justify-content: space-between; 
-                flex-wrap: wrap; /* Safety: allows wrapping if screen is TINY */
-                overflow-x: hidden; /* STOP THE SIDE SCROLL */
-            }
-
-            .nav-links {
-                gap: 5px; /* Squeeze buttons closer together */
-                margin-left: auto; /* Keep pushing right */
-                padding-right: 0;
-            }
-            
-            /* Shrink the Logo slightly */
-            .nav-logo { height: 35px; }
-            .nav-title { font-size: 1.0rem; }
-            .nav-subtitle { display: none; } 
-            
-            /* Shrink links AND the Dropdown Button */
-            .nav-links a, .dropbtn {
-                padding: 6px 10px !important; /* Smaller pill padding */
-                font-size: 0.70rem !important; /* Smaller text */
-                border-width: 1px;
-                min-width: auto; /* Prevent fixed widths */
-            }
-            
-            /* Fix the dropdown menu position on mobile */
-            .dropdown-content {
-                min-width: 150px; /* Slightly narrower menu */
-                left: auto; 
-                right: 0; /* Align right edge with button */
-                transform: none; /* Remove centering transform */
-            }
-        }
-
-        /* --- 2026 GLASS DROPDOWN (Missing from your file) --- */
-
-/* 1. Container needed to position the dropdown content */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-/* 2. The "Services" Button (Matches your link style) */
+/* --- GLASS DROPDOWN --- */
+.dropdown { position: relative; display: inline-block; }
 .dropbtn {
-    background: rgba(0, 0, 0, 0.2);
-    color: white;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    font-size: 0.85rem;
-    padding: 10px 25px;
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    border-radius: 50px;
-    cursor: pointer;
-    backdrop-filter: blur(4px);
-    transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.2); color: white; font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 0.85rem; padding: 10px 25px; border: 2px solid rgba(255, 255, 255, 0.7); border-radius: 50px; cursor: pointer; backdrop-filter: blur(4px); transition: all 0.3s ease;
 }
-
-/* Hover effect for the main button */
-.dropdown:hover .dropbtn {
-    background: #ffffff;
-    color: #000000;
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
-}
-
-/* 3. The Hidden Menu (The Dropdown itself) */
+.dropdown:hover .dropbtn { background: #ffffff; color: #000000; box-shadow: 0 0 15px rgba(6, 182, 212, 0.6); }
 .dropdown-content {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 100%; 
-    left: 50%;
-    transform: translateX(-50%); /* Centers it */
-    background: rgba(15, 23, 42, 0.95); /* Dark background */
-    min-width: 180px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    border-radius: 12px;
-    padding: 10px 0;
-    z-index: 1000;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-top: 10px;
+    display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.95); min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); border-radius: 12px; padding: 10px 0; z-index: 1000; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px;
 }
-
-/* 4. The Links inside the menu */
 .dropdown-content a {
-    color: #e2e8f0;
-    padding: 12px 20px;
-    text-decoration: none;
-    display: block;
-    font-family: -apple-system, system-ui, sans-serif;
-    font-size: 0.9rem;
-    text-transform: none;
-    border: none;
-    background: none;
-    text-align: center;
+    color: #e2e8f0; padding: 12px 20px; text-decoration: none; display: block; font-family: -apple-system, system-ui, sans-serif; font-size: 0.9rem; text-transform: none; border: none; background: none; text-align: center;
 }
-
-.dropdown-content a:hover {
-    background: rgba(6, 182, 212, 0.2);
-    color: #ffffff;
-    box-shadow: none;
-    transform: none;
-    border: none;
-}
-
-/* 5. Show the menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-    animation: fadeIn 0.2s ease-in-out;
-}
-
-/* 6. The "Invisible Bridge" Fix (Prevents menu closing too fast) */
+.dropdown-content a:hover { background: rgba(6, 182, 212, 0.2); color: #ffffff; box-shadow: none; transform: none; border: none; }
+.dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.2s ease-in-out; }
 .dropdown-content::before {
-    content: "";
-    position: absolute;
-    top: -15px; 
-    left: 0;
-    width: 100%;
-    height: 15px;
-    background: transparent;
-    display: block;
+    content: ""; position: absolute; top: -15px; left: 0; width: 100%; height: 15px; background: transparent; display: block;
 }
+@keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translate(-50%, -10px); }
-    to { opacity: 1; transform: translate(-50%, 0); }
-}
-
-            /* --- GLASS MODAL STYLES --- */
+/* --- GLASS MODAL STYLES --- */
 .modal-overlay {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(15, 23, 42, 0.8); /* Dark overlay */
-    backdrop-filter: blur(5px);
-    z-index: 9999;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(5px); z-index: 9999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;
 }
-
-.modal-overlay.active {
-    display: flex;
-    opacity: 1;
-}
-
+.modal-overlay.active { display: flex; opacity: 1; }
 .modal-content {
-    background: white;
-    width: 90%;
-    max-width: 450px;
-    padding: 30px;
-    border-radius: 20px;
-    position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-    animation: slideUp 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    background: white; width: 90%; max-width: 450px; padding: 30px; border-radius: 20px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3); animation: slideUp 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
-
-/* Form Inputs */
 .form-group { margin-bottom: 15px; }
 .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); }
 .form-group input, .form-group select, .form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    background: #f8fafc;
-    box-sizing: border-box; /* Fixes width issues */
+    width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 0.95rem; background: #f8fafc; box-sizing: border-box; 
 }
-/* ADDED: .form-group select:focus to fix the dropdown too */
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-blue);
-    background: white;
-    color: #0f172a; /* <--- FORCE TEXT DARK GRAY when typing */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* <--- Added the subtle shadow you asked for */
+    outline: none; border-color: var(--primary-blue); background: white; color: #0f172a !important; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
-/* Close Button */
-.close-modal {
-    position: absolute;
-    top: 15px; right: 20px;
-    font-size: 2rem;
-    cursor: pointer;
-    color: #94a3b8;
-    line-height: 1;
-}
+.close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; cursor: pointer; color: #94a3b8; line-height: 1; }
 .close-modal:hover { color: var(--primary-blue); }
-
-@keyframes slideUp {
-    from { transform: translateY(50px) scale(0.9); }
-    to { transform: translateY(0) scale(1); }
-}
+@keyframes slideUp { from { transform: translateY(50px) scale(0.9); } to { transform: translateY(0) scale(1); } }
 
 /* Dark Mode Fix for Modal */
 @media (prefers-color-scheme: dark) {
     .modal-content { background: #1e293b; border: 1px solid #334155; }
     .form-group label { color: #e2e8f0; }
-    .form-group input, .form-group select, .form-group textarea {
-        background: #0f172a; border-color: #334155; color: white;
-    }
+    .form-group input, .form-group select, .form-group textarea { background: #0f172a; border-color: #334155; color: white; }
 }
-
-        
