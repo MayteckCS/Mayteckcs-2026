@@ -313,3 +313,81 @@
                 border-width: 1px;
             }
         }
+            /* --- GLASS MODAL STYLES --- */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.8); /* Dark overlay */
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 450px;
+    padding: 30px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    animation: slideUp 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+/* Form Inputs */
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); }
+.form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: #f8fafc;
+    box-sizing: border-box; /* Fixes width issues */
+}
+/* ADDED: .form-group select:focus to fix the dropdown too */
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    background: white;
+    color: #0f172a; /* <--- FORCE TEXT DARK GRAY when typing */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* <--- Added the subtle shadow you asked for */
+}
+
+/* Close Button */
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #94a3b8;
+    line-height: 1;
+}
+.close-modal:hover { color: var(--primary-blue); }
+
+@keyframes slideUp {
+    from { transform: translateY(50px) scale(0.9); }
+    to { transform: translateY(0) scale(1); }
+}
+
+/* Dark Mode Fix for Modal */
+@media (prefers-color-scheme: dark) {
+    .modal-content { background: #1e293b; border: 1px solid #334155; }
+    .form-group label { color: #e2e8f0; }
+    .form-group input, .form-group select, .form-group textarea {
+        background: #0f172a; border-color: #334155; color: white;
+    }
+}
+
+        
