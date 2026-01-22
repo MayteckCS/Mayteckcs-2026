@@ -184,3 +184,35 @@ footer a:hover { color: #ffffff; text-shadow: 0 0 10px rgba(6, 182, 212, 0.5); }
     .form-group label { color: #e2e8f0; }
     .form-group input, .form-group select, .form-group textarea { background: #0f172a; border-color: #334155; color: white; }
 }
+/* --- FINAL MOBILE MENU PATCH (Paste at the very bottom of style.css) --- */
+
+/* 1. Force the Navbar to allow the menu to hang out */
+@media (max-width: 768px) {
+    .navbar {
+        overflow: visible !important; /* The nuclear option to stop clipping */
+        contain: none !important; /* Fixes glass-effect clipping issues */
+    }
+    
+    /* 2. Mobile Positioning: Anchor it firmly to the right */
+    .dropdown-content {
+        right: -10px !important; /* Nudge it slightly to align with screen edge */
+        left: auto !important;
+        transform: none !important; /* Stop the centering jitter */
+        width: 200px; /* Give it plenty of width */
+    }
+}
+
+/* 3. THE MAGIC FIX: Keep menu open when tapped (Focus) */
+/* This works on phones where 'hover' fails */
+.dropdown:focus-within .dropdown-content {
+    display: block !important;
+    opacity: 1 !important;
+    animation: none !important; /* Stop it from fading in/out repeatedly */
+}
+
+/* 4. Remove the blue outline when you tap the button */
+.dropbtn:focus {
+    outline: none;
+    background: white; /* Give visual feedback that it's active */
+    color: black;
+}
