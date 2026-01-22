@@ -4,75 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mayteck C.S. | IT Support, Web Design & Local SEO in Huntington Beach</title>
-<meta name="description" content="Premier IT support, custom web design, and local SEO services for businesses in Huntington Beach and Orange County. Creative sites & smarter solutions. Get a quote today.">
+    <meta name="description" content="Premier IT support, custom web design, and local SEO services for businesses in Huntington Beach and Orange County. Creative sites & smarter solutions. Get a quote today.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="style.css">
-   </head>
+</head>
 <body>
-    <nav class="navbar">
-    <img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo">
-    <div class="nav-text">
-        <h1 class="nav-title">Mayteck C.S.</h1>
-        <p class="nav-subtitle">Creative Sites & Smarter Solutions</p>
-    </div>
-
-    <div class="nav-links">
-    <a href="index.html">HOME</a>
     
-    <div class="dropdown">
-        <button class="dropbtn">SERVICES ▾</button>
-        <div class="dropdown-content">
-            <a href="web-design.html">Web Design</a>
-            <a href="local-seo.html">Local SEO</a>
-            <a href="smart-systems.html">Smart Systems</a>
-         </div>
-    </div>
+    <nav class="navbar">
+        <a href="index.html"><img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo"></a>
+        <div class="nav-text">
+            <h1 class="nav-title">Mayteck C.S.</h1>
+            <p class="nav-subtitle">Creative Sites & Smarter Solutions</p>
+        </div>
 
-    <a href="#contact">CONTACT</a>
-</div>
-</nav>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn">SERVICES ▾</button>
+                <div class="dropdown-content">
+                    <a href="web-design.html">Web Design</a>
+                    <a href="local-seo.html">Local SEO</a>
+                    <a href="smart-systems.html">Smart Systems</a>
+                </div>
+            </div>
+
+            <a href="javascript:void(0)" onclick="openModal()" style="text-decoration: none; color: white; font-weight: 700; font-family: 'Orbitron', sans-serif;">CONTACT</a>
+        </div>
+    </nav>
+
     <header>
         <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
             <source src="assets/hero-video.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span style="border: 1px solid rgba(255,255,255,0.3); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; background: rgba(255,255,255,0.1);">
+            <span style="border: 1px solid rgba(255,255,255,0.3); padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; background: rgba(255,255,255,0.1); margin-bottom: 15px; display: inline-block;">
                 Serving Huntington Beach & North OC
             </span>
-            <h1 id="hero-title">Loading...</h1>
-            <p id="hero-desc">Loading...</p>
-            <a href="javascript:void(0)" onclick="openModal()" class="btn">Get a Quote</a>
+            <h1 id="hero-title" style="font-size: 3rem;">Websites That Actually Sell.</h1>
+            <p id="hero-desc">Most websites are just digital brochures. We build high-speed conversion engines designed to turn your traffic into revenue.</p>
+            <a href="javascript:void(0)" onclick="openModal()" class="btn">Start Your Project</a>
         </div>
     </header>
 
     <section class="services container">
-        <h2 style="text-align: center;">Simplified IT Services</h2>
+        <h2 style="text-align: center; margin-bottom: 40px;">Simplified IT Services</h2>
         <div class="grid" id="services-grid">
+            
+            <div class="card">
+                <div class="icon-box" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" style="fill: white; width: 40px; height: 40px;"><path d="M12.04 2.9l-2.55 2.55-5.96-5.96 4.67-4.67 4.96 4.96-1.12 3.12zM7.5 10.5h2v6h-2zM14.5 10.5h2v6h-2zM11 5.5h2v14h-2z"/></svg>
+                </div>
+                <h3><a href='web-design.html' style='color:inherit; text-decoration:none;'>Custom Web Design</a></h3>
+                <p>Mobile-first sites built for speed and sales. No templates, just results.</p>
             </div>
+
+            <div class="card">
+                <div class="icon-box" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" style="fill: white; width: 40px; height: 40px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                </div>
+                <h3><a href='local-seo.html' style='color:inherit; text-decoration:none;'>Local SEO & Maps</a></h3>
+                <p>Dominate local search. We rank you #1 on Google Maps in your city.</p>
+            </div>
+
+            <div class="card">
+                <div class="icon-box" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" style="fill: white; width: 40px; height: 40px;"><path d="M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                </div>
+                <h3><a href='smart-systems.html' style='color:inherit; text-decoration:none;'>Smart Systems</a></h3>
+                <p>Enterprise WiFi, structured cabling, and POS setups that never go down.</p>
+            </div>
+
+        </div>
     </section>
 
     <footer id="contact">
-    <div class="container">
-        <h3 style="font-family: 'Orbitron', sans-serif; font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 10px; color: white;">
-            MAYTECK C.S.
-        </h3>
-        <p style="color: #94a3b8; margin-bottom: 5px;">Creative Sites & Smarter Solutions</p>
-        
-        <div style="margin: 20px 0;">
-            <p id="contact-info" style="font-size: 1.1rem; line-height: 1.8;">Loading...</p>
+        <div class="container">
+            <h3 style="font-family: 'Orbitron', sans-serif; font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 10px; color: white;">
+                MAYTECK C.S.
+            </h3>
+            <p style="color: #94a3b8; margin-bottom: 5px;">Creative Sites & Smarter Solutions</p>
+            
+            <div style="margin: 20px 0;">
+                <p id="contact-info" style="font-size: 1.1rem; line-height: 1.8;">
+                    <a href="mailto:mm@mayteckcs.com">mm@mayteckcs.com</a><br>
+                    <a href="tel:+17145550199">(714) 555-0199</a>
+                </p>
+            </div>
+    
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+    
+            <div class="legal" style="font-size: 0.85rem; color: #64748b; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                <span>&copy; 2026 Mayteck C.S. All Rights Reserved.</span>
+                <span>Huntington Beach, CA</span>
+            </div>
         </div>
-
-        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
-
-        <div class="legal" style="font-size: 0.85rem; color: #64748b; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
-            <span>&copy; 2026 Mayteck C.S. All Rights Reserved.</span>
-            <span>Huntington Beach, CA</span>
-        </div>
-    </div>
     </footer>
 
     <div class="chat-widget-container">
@@ -80,28 +110,41 @@
             <div class="chat-header">
                 <h4><span class="status-dot"></span> Mayteck Assistant</h4>
             </div>
-            
             <div class="chat-messages" id="chatMessages">
-                <div class="msg ai">
-                    Hey there! I'm the automated assistant. I can answer questions about web design, SEO, or IT setups. What's on your mind?
-                </div>
+                <div class="msg ai">Hey there! I'm the automated assistant. I can answer questions about web design, SEO, or IT setups. What's on your mind?</div>
             </div>
-
             <div class="chat-input-area">
                 <input type="text" id="chatInput" class="chat-input" placeholder="Type a message...">
-                
-                <button class="icon-btn mic-btn" id="micBtn" onclick="toggleMic()">
-                    <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
-                </button>
-                
-                <button class="icon-btn" onclick="sendMessage()">
-                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
+                <button class="icon-btn mic-btn" id="micBtn" onclick="toggleMic()"><svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg></button>
+                <button class="icon-btn" onclick="sendMessage()"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg></button>
             </div>
         </div>
+        <div class="chat-toggle" onclick="toggleChat()"><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></div>
+    </div>
 
-        <div class="chat-toggle" onclick="toggleChat()">
-            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+    <div id="quoteModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal(event)">&times;</span>
+            <h2 style="font-family: 'Orbitron', sans-serif; margin-bottom: 10px;">Start Your Project</h2>
+            <p style="margin-bottom: 20px; font-size: 0.9rem; color: #64748b;">Tell us what you need. We usually reply within 2 hours.</p>
+            <form action="https://formsubmit.co/mm@mayteckcs.com" method="POST">
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://mayteckcs.com/index.html">
+
+                <div class="form-group"><label>Name</label><input type="text" name="name" required placeholder="John Doe"></div>
+                <div class="form-group"><label>Email</label><input type="email" name="email" required placeholder="john@company.com"></div>
+                <div class="form-group"><label>Project Type</label>
+                    <select name="service">
+                        <option value="Web Design">Web Design</option>
+                        <option value="Local SEO">Local SEO</option>
+                        <option value="IT/Systems">IT & Systems</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Details</label><textarea name="message" rows="3" placeholder="Tell us about your project..." required></textarea></div>
+                <button type="submit" class="btn" style="width: 100%; border: none; margin-top: 10px;">Send Request</button>
+            </form>
         </div>
     </div>
 
@@ -125,12 +168,9 @@
             if (dropBtn && dropContent) {
                 // When "SERVICES" is tapped on mobile...
                 dropBtn.addEventListener('click', (e) => {
-                    // Check if we are on a mobile screen
                     if (window.innerWidth <= 768) {
-                        e.preventDefault(); // Stop the browser from guessing
-                        e.stopPropagation(); // Stop the click from closing the menu immediately
-                        
-                        // Toggle the menu visibility
+                        e.preventDefault(); 
+                        e.stopPropagation(); 
                         if (dropContent.style.display === 'block') {
                             dropContent.style.display = 'none';
                         } else {
@@ -138,8 +178,7 @@
                         }
                     }
                 });
-
-                // Close the menu if you tap ANYWHERE else on the screen
+                // Close the menu if you tap ANYWHERE else
                 document.addEventListener('click', (e) => {
                     if (window.innerWidth <= 768) {
                         if (!e.target.closest('.dropdown')) {
@@ -149,48 +188,34 @@
                 });
             }
         });
+
+        // --- 3. CHAT WIDGET LOGIC ---
+        function toggleChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('active');
+        }
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const messages = document.getElementById('chatMessages');
+            if (input.value.trim() !== "") {
+                const userMsg = document.createElement('div');
+                userMsg.className = 'msg user';
+                userMsg.textContent = input.value;
+                messages.appendChild(userMsg);
+                input.value = "";
+                messages.scrollTop = messages.scrollHeight;
+                
+                // Simple AI reply
+                setTimeout(() => {
+                    const aiMsg = document.createElement('div');
+                    aiMsg.className = 'msg ai';
+                    aiMsg.textContent = "Thanks for asking! I'm just a demo bot right now, but a real human from Mayteck will reply if you use the 'Contact' form.";
+                    messages.appendChild(aiMsg);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 1000);
+            }
+        }
     </script>
-    <div id="quoteModal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeModal(event)">&times;</span>
-            
-            <h2 style="font-family: 'Orbitron', sans-serif; margin-bottom: 10px;">Start Your Project</h2>
-            <p style="margin-bottom: 20px; font-size: 0.9rem; color: #64748b;">Tell us what you need. We usually reply within 2 hours.</p>
-    
-            <form action="https://formsubmit.co/mm@mayteckcs.com" method="POST">
-                <input type="text" name="_honey" style="display:none">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://mayteckcs.com/local-seo.html">
-    
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" required placeholder="John Doe">
-                </div>
-    
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required placeholder="john@company.com">
-                </div>
-    
-                <div class="form-group">
-                    <label>Project Type</label>
-                    <select name="service">
-                        <option value="Web Design">Web Design</option>
-                        <option value="Local SEO">Local SEO</option>
-                        <option value="IT/Systems">IT & Systems</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <label>Details</label>
-                    <textarea name="message" rows="3" placeholder="Tell us about your project..." required></textarea>
-                </div>
-    
-                <button type="submit" class="btn" style="width: 100%; border: none; margin-top: 10px;">Send Request</button>
-            </form>
-        </div>
-    </div>
 
 </body>
 </html>
