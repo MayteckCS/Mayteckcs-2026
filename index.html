@@ -106,148 +106,7 @@
     </div>
 
     <script>
-        // --- 1. THE SINGLE SOURCE OF TRUTH (Method 2) ---
-        // Edit this object, and both the website HTML AND the AI prompt update automatically.
-        const siteConfig = {
-            companyName: "Mayteck C.S.",
-            tagline: "Modern Web & IT Infrastructure for Local Business.",
-            contact: {
-                phone: "(714) 465-4690",
-                email: "mm@mayteckcs.com",
-                location: "Huntington Beach, CA (92649)"
-            },
-            services: [
-                {
-                    // This turns the title into a clickable link
-                    title: "<a href='web-design.html' style='color:inherit; text-decoration:none;'>Web Design</a>",
-                    desc: "Modern, mobile-first websites. We focus on speed and clarity to turn visitors into foot traffic.",
-                    icon: '<path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM4 6h16v12H4V6zm5 10v-2h6v2H9zm-3-4V8h12v4H6z"/>'
-                },
-                {
-                    // This turns the title into a clickable link
-                    title: "<a href='local-seo.html' style='color:inherit; text-decoration:none;'>Local SEO</a>",
-                    desc: "Dominate 'Near Me' searches. We optimize Google Maps and site structure so locals find you first.",
-                    icon: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>'
-                },
-                {
-                    // We leave this one alone for now since you don't have the page yet
-                    title: "Smart Systems",
-                    desc: "WiFi, Cabling, and POS setup. We handle the hardware so your physical location runs smoothly.",
-                    icon: '<path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/>'
-                }
-            ],
-            // AI PERSONALITY SETTINGS
-            aiSettings: {
-                tone: "Friendly, Professional, SoCal Vibe (Chill but competent).",
-                constraints: "Keep answers under 2 sentences. No jargon. Be humble.",
-                forbidden: "Do not offer desktop support or password resets."
-            }
-        };
-
-        // --- 2. POPULATE WEBSITE HTML ---
-        document.getElementById('hero-title').innerText = "Digital Solutions for Local Business"; // Or siteConfig.companyName
-        document.getElementById('hero-desc').innerText = siteConfig.tagline;
-        document.getElementById('contact-info').innerHTML = `${siteConfig.contact.location}<br><a href="tel:${siteConfig.contact.phone}">${siteConfig.contact.phone}</a> &bull; <a href="mailto:${siteConfig.contact.email}">${siteConfig.contact.email}</a>`;
-
-        const serviceGrid = document.getElementById('services-grid');
-siteConfig.services.forEach(s => {
-    const div = document.createElement('div');
-    div.className = 'card';
-    // Now we render the icon-box structure again
-    div.innerHTML = `
-        <div class="icon-box" style="width: 50px; height: 50px; background: var(--brand-gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px;">
-            <svg viewBox="0 0 24 24" style="fill: white; width: 24px; height: 24px;">${s.icon}</svg>
-        </div>
-        <h3>${s.title}</h3>
-        <p>${s.desc}</p>
-    `;
-    serviceGrid.appendChild(div);
-});
-
-        // --- 3. GENERATE AI SYSTEM PROMPT ---
-        // This function creates the "Brain" for the AI based on the config above.
-        function generateSystemPrompt() {
-            return `
-            ROLE: You are the assistant for ${siteConfig.companyName}.
-            LOCATION: ${siteConfig.contact.location}.
-            CONTACT: ${siteConfig.contact.phone}, ${siteConfig.contact.email}.
-            
-            SERVICES WE OFFER:
-            ${siteConfig.services.map(s => `- ${s.title}: ${s.desc}`).join('\n')}
-            
-            YOUR VIBE: ${siteConfig.aiSettings.tone}
-            RULES: ${siteConfig.aiSettings.constraints}
-            RESTRICTIONS: ${siteConfig.aiSettings.forbidden}
-            
-            EXAMPLE INTERACTION:
-            User: "My wifi sucks."
-            You: "That's frustrating. We can definitely map out your coverage and install access points to fix those dead zones. Want to schedule a site survey?"
-            `;
-        }
-
-        // --- 4. CHAT UI LOGIC ---
-        const chatWindow = document.getElementById('chatWindow');
-        const messagesContainer = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        let isOpen = false;
-
-        function toggleChat() {
-            isOpen = !isOpen;
-            chatWindow.classList.toggle('active', isOpen);
-            if (isOpen) chatInput.focus();
-        }
-
-        function addMessage(text, sender) {
-            const div = document.createElement('div');
-            div.className = `msg ${sender}`;
-            div.innerText = text;
-            messagesContainer.appendChild(div);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-
-        // SIMULATE AI RESPONSE (Since we aren't connected to real API yet)
-        function getSimulatedAIResponse(userText) {
-            // In the real version, this is where you send 'userText' + 'generateSystemPrompt()' to Gemini
-            const prompt = generateSystemPrompt(); 
-            console.log("SYSTEM PROMPT GENERATED:", prompt); // Check console to see the invisible prompt!
-
-            return "I'm just a demo right now, but I see you asked about: \"" + userText + "\". In the live version, I'd use the pricing data in the code to answer that briefly!";
-        }
-
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            
-            // 1. Add User Message
-            addMessage(text, 'user');
-            chatInput.value = '';
-
-            // 2. Simulate AI Thinking
-            setTimeout(() => {
-                const response = getSimulatedAIResponse(text);
-                addMessage(response, 'ai');
-            }, 600);
-        }
-
-        // Allow "Enter" key to send
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        // Voice Stub
-        let isRecording = false;
-        function toggleMic() {
-            const btn = document.getElementById('micBtn');
-            isRecording = !isRecording;
-            if(isRecording) {
-                btn.classList.add('active');
-                chatInput.placeholder = "Listening...";
-            } else {
-                btn.classList.remove('active');
-                chatInput.placeholder = "Type a message...";
-            }
-        }
-
+        // --- 1. GLASS MODAL LOGIC ---
         function openModal() {
             document.getElementById('quoteModal').classList.add('active');
         }
@@ -257,6 +116,39 @@ siteConfig.services.forEach(s => {
                 document.getElementById('quoteModal').classList.remove('active');
             }
         }
+
+        // --- 2. MOBILE MENU FIX (The "Sticky" Logic) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropBtn = document.querySelector('.dropbtn');
+            const dropContent = document.querySelector('.dropdown-content');
+
+            if (dropBtn && dropContent) {
+                // When "SERVICES" is tapped on mobile...
+                dropBtn.addEventListener('click', (e) => {
+                    // Check if we are on a mobile screen
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault(); // Stop the browser from guessing
+                        e.stopPropagation(); // Stop the click from closing the menu immediately
+                        
+                        // Toggle the menu visibility
+                        if (dropContent.style.display === 'block') {
+                            dropContent.style.display = 'none';
+                        } else {
+                            dropContent.style.display = 'block';
+                        }
+                    }
+                });
+
+                // Close the menu if you tap ANYWHERE else on the screen
+                document.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) {
+                        if (!e.target.closest('.dropdown')) {
+                            dropContent.style.display = 'none';
+                        }
+                    }
+                });
+            }
+        });
     </script>
     <div id="quoteModal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
