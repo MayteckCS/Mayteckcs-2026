@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Systems & IT | Mayteck C.S.</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html"><img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo"></a>
+        <div class="nav-text">
+            <h1 class="nav-title">Mayteck C.S.</h1>
+            <p class="nav-subtitle">Systems Division</p>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">HOME</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn">SERVICES ▾</button>
+                <div class="dropdown-content">
+                    <a href="web-design.html">Web Design</a>
+                    <a href="local-seo.html">Local SEO</a>
+                    <a href="smart-systems.html">Smart Systems</a>
+                </div>
+            </div>
+
+            <a href="#contact" style="text-decoration: none; color: white; font-weight: 700; font-family: 'Orbitron', sans-serif;">CONTACT</a>
+        </div>
+    </nav>
+
+    <header style="height: 50vh; min-height: 350px;">
+        <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
+            <source src="assets/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 style="font-size: 3rem;">Infrastructure That Just Works.</h1>
+            <p>Stop resetting your router. We engineer rock-solid networks, structured cabling, and POS systems that keep your business online 24/7.</p>
+            <a href="javascript:void(0)" onclick="openModal()" class="btn">Get a Site Survey</a>
+        </div>
+    </header>
+
+    <section class="services container">
+        <h2 style="text-align: center; margin-bottom: 40px;">The Invisible Backbone</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="icon-box" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" style="fill: white; width: 40px; height: 40px;"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+                </div>
+                <h3>Enterprise WiFi</h3>
+                <p>Dead zones kill productivity. We map your physical space to install access points that guarantee gigabit speeds in every corner of your building.</p>
+            </div>
+            <div class="card">
+                <div class="icon-box" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" style="fill: white; width: 40px; height: 40px;"><path d="M20 13H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM20 3H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+                </div>
+                <h3>Structured Cabling</h3>
+                <p>Messy wires are a liability. We install organized, labeled, and future-proof Cat6/Fiber backbones that scale effortlessly as you hire new staff.</p>
+            </div>
+            <div class="card">
+                <div class="icon-box" style="margin-bottom: 20px;">
+                    <svg viewBox="0 0 24 24" style="fill: white; width: 40px; height: 40px;"><path d="M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z"/></svg>
+                </div>
+                <h3>POS & Hardware</h3>
+                <p>A frozen register means lost sales. We deploy robust Point-of-Sale hardware designed to handle your busiest Saturday night without a glitch.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <h3 style="font-family: 'Orbitron', sans-serif; color: white;">Build It Right</h3>
+            <p style="margin: 20px 0;">Schedule a site walkthrough to assess your infrastructure.</p>
+            <a href="javascript:void(0)" onclick="openModal()" class="btn">Get a Quote</a>
+            
+            <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 30px 0;">
+            <div class="legal" style="font-size: 0.85rem; color: #64748b;">
+                <span>&copy; 2026 Mayteck C.S.</span>
+            </div>
+        </div>
+    </footer>
+
+    <div id="quoteModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal(event)">&times;</span>
+            
+            <h2 style="font-family: 'Orbitron', sans-serif; margin-bottom: 10px;">Start Your Project</h2>
+            <p style="margin-bottom: 20px; font-size: 0.9rem; color: #64748b;">Tell us what you need. We usually reply within 2 hours.</p>
+    
+            <form action="https://formsubmit.co/mm@mayteckcs.com" method="POST">
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <input type="hidden" name="_next" value="https://mayteckcs.com/smart-systems.html">
+    
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" required placeholder="John Doe">
+                </div>
+    
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required placeholder="john@company.com">
+                </div>
+    
+                <div class="form-group">
+                    <label>Project Type</label>
+                    <select name="service">
+                        <option value="IT/Systems" selected>IT & Systems</option>
+                        <option value="Web Design">Web Design</option>
+                        <option value="Local SEO">Local SEO</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label>Details</label>
+                    <textarea name="message" rows="3" placeholder="Tell us about your project..." required></textarea>
+                </div>
+    
+                <button type="submit" class="btn" style="width: 100%; border: none; margin-top: 10px;">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal() {
+            document.getElementById('quoteModal').classList.add('active');
+        }
+
+        function closeModal(e) {
+            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('close-modal')) {
+                document.getElementById('quoteModal').classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

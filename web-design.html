@@ -10,16 +10,28 @@
 <body>
     
     <nav class="navbar">
-        <a href="index.html"><img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo"></a>
-        <div class="nav-text">
-            <h1 class="nav-title">Mayteck C.S.</h1>
-            <p class="nav-subtitle">Web Design Division</p>
+    <a href="index.html"><img src="assets/MayteckCS_logo.png" alt="Mayteck Logo" class="nav-logo"></a>
+    
+    <div class="nav-text">
+        <h1 class="nav-title">Mayteck C.S.</h1>
+        <p class="nav-subtitle">Creative Sites & Smarter Solutions</p>
+    </div>
+
+    <div class="nav-links">
+        <a href="index.html">HOME</a>
+        
+        <div class="dropdown">
+            <button class="dropbtn">SERVICES ▾</button>
+            <div class="dropdown-content">
+                <a href="web-design.html">Web Design</a>
+                <a href="local-seo.html">Local SEO</a>
+                <a href="smart-systems.html">Smart Systems</a>
+            </div>
         </div>
-        <div class="nav-links">
-            <a href="index.html">HOME</a>
-            <a href="local-seo.html">SEO</a>
-        </div>
-    </nav>
+
+        <a href="javascript:void(0)" onclick="openModal()" style="text-decoration: none; color: white; font-weight: 700; font-family: 'Orbitron', sans-serif;">CONTACT</a>
+    </div>
+</nav>
 
     <header style="height: 50vh; min-height: 350px;"> <video class="hero-video" autoplay muted loop playsinline poster="assets/fallback.jpg">
             <source src="assets/hero-video.mp4" type="video/mp4">

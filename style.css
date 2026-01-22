@@ -313,6 +313,99 @@
                 border-width: 1px;
             }
         }
+
+        /* --- 2026 GLASS DROPDOWN (Missing from your file) --- */
+
+/* 1. Container needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 2. The "Services" Button (Matches your link style) */
+.dropbtn {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 10px 25px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect for the main button */
+.dropdown:hover .dropbtn {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+}
+
+/* 3. The Hidden Menu (The Dropdown itself) */
+.dropdown-content {
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%; 
+    left: 50%;
+    transform: translateX(-50%); /* Centers it */
+    background: rgba(15, 23, 42, 0.95); /* Dark background */
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    padding: 10px 0;
+    z-index: 1000;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-top: 10px;
+}
+
+/* 4. The Links inside the menu */
+.dropdown-content a {
+    color: #e2e8f0;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: block;
+    font-family: -apple-system, system-ui, sans-serif;
+    font-size: 0.9rem;
+    text-transform: none;
+    border: none;
+    background: none;
+    text-align: center;
+}
+
+.dropdown-content a:hover {
+    background: rgba(6, 182, 212, 0.2);
+    color: #ffffff;
+    box-shadow: none;
+    transform: none;
+    border: none;
+}
+
+/* 5. Show the menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+/* 6. The "Invisible Bridge" Fix (Prevents menu closing too fast) */
+.dropdown-content::before {
+    content: "";
+    position: absolute;
+    top: -15px; 
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: transparent;
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -10px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
             /* --- GLASS MODAL STYLES --- */
 .modal-overlay {
     display: none; /* Hidden by default */
