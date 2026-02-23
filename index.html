@@ -149,72 +149,78 @@
     </div>
 
     <script>
-        // --- 1. GLASS MODAL LOGIC ---
-        function openModal() {
-            document.getElementById('quoteModal').classList.add('active');
-        }
+       // --- 1. THE SINGLE SOURCE OF TRUTH ---
+const siteConfig = {
+    companyName: "Mayteck C.S.",
+    contact: {
+        phone: "(714) 465-4690",
+        email: "mm@mayteckcs.com",
+        location: "Huntington Beach, CA"
+    }
+};
 
-        function closeModal(e) {
-            if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('close-modal')) {
-                document.getElementById('quoteModal').classList.remove('active');
-            }
-        }
+// --- 2. AUTO-POPULATE CONTACT INFO ---
+document.addEventListener('DOMContentLoaded', () => {
+    const contactInfo = document.getElementById('contact-info');
+    if (contactInfo) {
+        contactInfo.innerHTML = `
+            <a href="mailto:${siteConfig.contact.email}">${siteConfig.contact.email}</a><br>
+            <a href="tel:+1${siteConfig.contact.phone.replace(/\D/g,'')}">${siteConfig.contact.phone}</a>
+        `;
+    }
+});
 
-        // --- 2. MOBILE MENU FIX (The "Sticky" Logic) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropBtn = document.querySelector('.dropbtn');
-            const dropContent = document.querySelector('.dropdown-content');
+// --- 3. UI LOGIC (Modal & Menu) ---
+function openModal() {
+    document.getElementById('quoteModal').classList.add('active');
+}
 
-            if (dropBtn && dropContent) {
-                // When "SERVICES" is tapped on mobile...
-                dropBtn.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault(); 
-                        e.stopPropagation(); 
-                        if (dropContent.style.display === 'block') {
-                            dropContent.style.display = 'none';
-                        } else {
-                            dropContent.style.display = 'block';
-                        }
-                    }
-                });
-                // Close the menu if you tap ANYWHERE else
-                document.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) {
-                        if (!e.target.closest('.dropdown')) {
-                            dropContent.style.display = 'none';
-                        }
-                    }
-                });
-            }
-        });
+function closeModal(e) {
+    if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('close-modal')) {
+        document.getElementById('quoteModal').classList.remove('active');
+    }
+}
 
-        // --- 3. CHAT WIDGET LOGIC ---
-        function toggleChat() {
-            const chatWindow = document.getElementById('chatWindow');
-            chatWindow.classList.toggle('active');
-        }
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const messages = document.getElementById('chatMessages');
-            if (input.value.trim() !== "") {
-                const userMsg = document.createElement('div');
-                userMsg.className = 'msg user';
-                userMsg.textContent = input.value;
-                messages.appendChild(userMsg);
-                input.value = "";
-                messages.scrollTop = messages.scrollHeight;
-                
-                // Simple AI reply
-                setTimeout(() => {
-                    const aiMsg = document.createElement('div');
-                    aiMsg.className = 'msg ai';
-                    aiMsg.textContent = "Thanks for asking! I'm just a demo bot right now, but a real human from Mayteck will reply if you use the 'Contact' form.";
-                    messages.appendChild(aiMsg);
-                    messages.scrollTop = messages.scrollHeight;
-                }, 1000);
-            }
-        }
+// Mobile Dropdown Fix
+document.addEventListener('click', (e) => {
+    const dropBtn = document.querySelector('.dropbtn');
+    const dropContent = document.querySelector('.dropdown-content');
+    
+    if (window.innerWidth <= 768 && e.target === dropBtn) {
+        e.preventDefault();
+        dropContent.style.display = dropContent.style.display === 'block' ? 'none' : 'block';
+    } else if (!e.target.closest('.dropdown') && dropContent) {
+        dropContent.style.display = 'none';
+    }
+});
+
+// --- 4. CHAT WIDGET LOGIC ---
+function toggleChat() {
+    document.getElementById('chatWindow').classList.toggle('active');
+}
+
+function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    if (input.value.trim() !== "") {
+        const userMsg = document.createElement('div');
+        userMsg.className = 'msg user';
+        userMsg.textContent = input.value;
+        messages.appendChild(userMsg);
+        
+        const userText = input.value; // Save for AI logic
+        input.value = "";
+        messages.scrollTop = messages.scrollHeight;
+        
+        setTimeout(() => {
+            const aiMsg = document.createElement('div');
+            aiMsg.className = 'msg ai';
+            aiMsg.textContent = `Thanks for asking about "${userText}"! A human will get back to you, or you can call us at ${siteConfig.contact.phone}.`;
+            messages.appendChild(aiMsg);
+            messages.scrollTop = messages.scrollHeight;
+        }, 1000);
+    }
+}
     </script>
 
 </body>
