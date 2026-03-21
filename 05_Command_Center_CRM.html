@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mayteck C.S. — Command Center</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Rajdhani:wght@400;500;600;700&family=Mulish:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+/* ══════════════════════════════════════════
+   TOKENS & RESET
+══════════════════════════════════════════ */
+:root {
+  --bg0:    #050D14;
+  --bg1:    #080F18;
+  --bg2:    #0B1520;
+  --bg3:    #101E2E;
+  --bg4:    #152438;
+  --panel:  #0D1A28;
+  --raised:  #122030;
+
+  --teal:   #00C8C8;
+  --teal2:  #009898;
+  --teal3:  #006868;
+  --teal-glow: rgba(0,200,200,0.12);
+
+  --gold:   #E8A830;
+  --gold2:  #B88020;
+  --gold-glow: rgba(232,168,48,0.1);
+
+  --green:  #28D878;
+  --green2: #1A9850;
+  --red:    #F05050;
+  --red2:   #A03030;
+  --amber:  #F08028;
+  --blue:   #4890E8;
+  --purple: #9870D8;
+
+  --text:   #C8DCF0;
+  --text2:  #7898B8;
+  --text3:  #3A5870;
+  --border: rgba(0,200,200,0.12);
+  --border2: rgba(0,200,200,0.06);
+
+  --shadow: 0 2px 20px rgba(0,0,0,0.5);
+  --glow-teal: 0 0 20px rgba(0,200,200,0.15);
+  --glow-gold: 0 0 20px rgba(232,168,48,0.1);
+
+  --font-display: 'Rajdhani', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --font-body:    'Mulish', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--bg1); }
+::-webkit-scrollbar-thumb { background: var(--teal3); border-radius: 2px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg0);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9999; opacity: 0.4;
+}
+
+/* ── SCAN LINES ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.04) 2px,
+    rgba(0,0,0,0.04) 4px
+  );
+  pointer-events: none; z-index: 9998;
+}
+
+/* ══════════════════════════════════════════
+   TOP BAR
+══════════════════════════════════════════ */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  height: 48px;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center;
+  padding: 0 20px;
+  gap: 0;
+}
+
+.topbar-brand {
+  display: flex; align-items: center; gap: 12px;
+  padding-right: 20px;
+  border-right: 1px solid var(--border);
+}
+.brand-logo {
+  width: 28px; height: 28px;
+  border: 1.5px solid var(--teal);
+  border-radius: 3px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 700;
+  color: var(--teal);
+  box-shadow: var(--glow-teal);
+  flex-shrink: 0;
+}
+.brand-text { display: flex; flex-direction: column; }
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 14px; font-weight: 700;
+  color: #fff; letter-spacing: 0.1em;
+  line-height: 1;
+}
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 8.5px; color: var(--teal);
+  letter-spacing: 0.15em; margin-top: 1px;
+}
+
+.topbar-nav {
+  display: flex; align-items: center; gap: 2px;
+  padding: 0 16px;
+  border-right: 1px solid var(--border);
+}
+.nav-btn {
+  font-family: var(--font-mono);
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 5px 10px;
+  border-radius: 2px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.nav-btn:hover, .nav-btn.active {
+  background: var(--teal-glow);
+  color: var(--teal);
+}
+
+.topbar-right {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 12px;
+}
+
+.status-pill {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text2);
+}
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  animation: pulse-dot 2s infinite;
+}
+.dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.dot-amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+.dot-red   { background: var(--red);   box-shadow: 0 0 6px var(--red); }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+#clock {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text2);
+  letter-spacing: 0.1em;
+}
+
+.btn-reload {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.1em;
+  padding: 5px 10px;
+  background: var(--teal-glow);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--teal);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-reload:hover { background: rgba(0,200,200,0.2); border-color: var(--teal2); }
+.btn-reload.loading { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ══════════════════════════════════════════
+   SHEET CONFIG BANNER
+══════════════════════════════════════════ */
+.config-banner {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  padding: 8px 20px;
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap;
+}
+.config-label {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--text3);
+  letter-spacing: 0.15em; flex-shrink: 0;
+}
+.config-input {
+  flex: 1; min-width: 320px; max-width: 600px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--teal);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.config-input:focus { border-color: var(--teal2); }
+.config-input::placeholder { color: var(--text3); }
+.config-help {
+  font-family: var(--font-mono);
+  font-size: 8.5px; color: var(--text3);
+  letter-spacing: 0.08em;
+}
+.config-help a { color: var(--teal2); text-decoration: none; }
+.config-help a:hover { color: var(--teal); }
+
+/* ══════════════════════════════════════════
+   MAIN LAYOUT
+══════════════════════════════════════════ */
+.main {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: calc(100vh - 48px - 38px);
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  grid-row: 1 / 3;
+  background: var(--bg1);
+  border-right: 1px solid var(--border);
+  padding: 16px 0 24px;
+  display: flex; flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-section-label {
+  font-family: var(--font-mono);
+  font-size: 8px; color: var(--text3);
+  letter-spacing: 0.25em; text-transform: uppercase;
+  padding: 10px 16px 4px;
+}
+
+.sidebar-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 16px;
+  cursor: pointer;
+  transition: all 0.12s;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+  color: var(--text2);
+}
+.sidebar-item:hover {
+  background: var(--teal-glow);
+  color: var(--teal);
+  border-left-color: var(--teal3);
+}
+.sidebar-item.active {
+  background: rgba(0,200,200,0.08);
+  color: var(--teal);
+  border-left-color: var(--teal);
+}
+.sidebar-item .si-icon { font-size: 13px; flex-shrink: 0; opacity: 0.8; }
+.sidebar-item .si-label { font-family: var(--font-body); font-weight: 400; flex: 1; }
+.sidebar-item .si-count {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--text3);
+  background: var(--bg3);
+  padding: 1px 5px; border-radius: 8px;
+}
+.sidebar-item.active .si-count {
+  background: var(--teal-glow);
+  color: var(--teal);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border2);
+  font-family: var(--font-mono);
+  font-size: 8px; color: var(--text3);
+  letter-spacing: 0.08em; line-height: 1.8;
+}
+
+/* ── KPI STRIP ── */
+.kpi-strip {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg1);
+}
+
+.kpi-cell {
+  padding: 14px 18px;
+  border-right: 1px solid var(--border2);
+  position: relative;
+  overflow: hidden;
+  transition: background 0.15s;
+}
+.kpi-cell:last-child { border-right: none; }
+.kpi-cell:hover { background: var(--bg2); }
+.kpi-cell::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.kpi-teal::before  { background: linear-gradient(90deg, var(--teal), transparent); }
+.kpi-gold::before  { background: linear-gradient(90deg, var(--gold), transparent); }
+.kpi-green::before { background: linear-gradient(90deg, var(--green), transparent); }
+.kpi-red::before   { background: linear-gradient(90deg, var(--red), transparent); }
+.kpi-blue::before  { background: linear-gradient(90deg, var(--blue), transparent); }
+
+.kpi-label {
+  font-family: var(--font-mono);
+  font-size: 8px; color: var(--text3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 700;
+  color: #fff; line-height: 1;
+  margin-bottom: 4px;
+}
+.kpi-sub {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--text3);
+}
+.kpi-delta {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  display: inline-flex; align-items: center; gap: 2px;
+}
+.delta-up   { color: var(--green); }
+.delta-down { color: var(--red); }
+.delta-flat { color: var(--text3); }
+
+/* ── CONTENT AREA ── */
+.content {
+  grid-column: 2;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+  overflow-y: auto;
+}
+
+/* ══════════════════════════════════════════
+   PANELS
+══════════════════════════════════════════ */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border2);
+}
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 12px; font-weight: 600;
+  color: #fff; letter-spacing: 0.08em;
+  text-transform: uppercase; flex: 1;
+}
+.panel-meta {
+  font-family: var(--font-mono);
+  font-size: 8.5px; color: var(--text3);
+  letter-spacing: 0.1em;
+}
+.panel-accent {
+  width: 4px; height: 14px; border-radius: 2px;
+}
+.accent-teal   { background: var(--teal); box-shadow: 0 0 8px var(--teal); }
+.accent-gold   { background: var(--gold); }
+.accent-green  { background: var(--green); }
+.accent-red    { background: var(--red); }
+.accent-purple { background: var(--purple); }
+
+.panel-body { padding: 14px 16px; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* ══════════════════════════════════════════
+   CLIENT TABLE
+══════════════════════════════════════════ */
+.client-table-wrap { overflow-x: auto; }
+
+.client-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.client-table thead tr {
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+
+.client-table th {
+  font-family: var(--font-mono);
+  font-size: 8.5px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text3);
+  padding: 8px 12px;
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.12s;
+}
+.client-table th:hover { color: var(--teal); }
+.client-table th.sort-asc::after  { content: ' ▲'; color: var(--teal); font-size: 8px; }
+.client-table th.sort-desc::after { content: ' ▼'; color: var(--teal); font-size: 8px; }
+
+.client-table tbody tr {
+  border-bottom: 1px solid var(--border2);
+  transition: background 0.12s;
+  cursor: pointer;
+}
+.client-table tbody tr:hover { background: rgba(0,200,200,0.04); }
+.client-table tbody tr.selected { background: rgba(0,200,200,0.08); }
+
+.client-table td {
+  padding: 9px 12px;
+  color: var(--text);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.td-name { font-weight: 600; color: #fff; }
+.td-domain {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--teal2);
+}
+.td-domain a { color: inherit; text-decoration: none; }
+.td-domain a:hover { color: var(--teal); }
+
+/* STATUS BADGES */
+.badge {
+  font-family: var(--font-mono);
+  font-size: 8.5px; font-weight: 500;
+  padding: 2px 7px; border-radius: 10px;
+  letter-spacing: 0.06em;
+  display: inline-block;
+  white-space: nowrap;
+}
+.badge-active  { background: rgba(40,216,120,0.12); color: var(--green);  border: 1px solid rgba(40,216,120,0.25); }
+.badge-setup   { background: rgba(232,168,48,0.12); color: var(--gold);   border: 1px solid rgba(232,168,48,0.25); }
+.badge-paused  { background: rgba(240,80,80,0.1);   color: var(--red);    border: 1px solid rgba(240,80,80,0.2); }
+.badge-prospect{ background: rgba(72,144,232,0.1);  color: var(--blue);   border: 1px solid rgba(72,144,232,0.2); }
+.badge-churned { background: rgba(58,88,112,0.2);   color: var(--text3);  border: 1px solid var(--border); }
+
+/* TIER BADGES */
+.tier {
+  font-family: var(--font-mono);
+  font-size: 8px; font-weight: 600;
+  padding: 2px 6px; border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+.tier-premium { background: rgba(232,168,48,0.15); color: var(--gold); border: 1px solid var(--gold2); }
+.tier-standard{ background: rgba(0,200,200,0.1); color: var(--teal2); border: 1px solid var(--teal3); }
+.tier-gbp     { background: rgba(72,144,232,0.1); color: var(--blue); border: 1px solid rgba(72,144,232,0.3); }
+.tier-build   { background: rgba(152,112,216,0.1); color: var(--purple); border: 1px solid rgba(152,112,216,0.3); }
+
+/* SCORE BAR */
+.score-bar-wrap {
+  display: flex; align-items: center; gap: 6px;
+  min-width: 90px;
+}
+.score-bar-track {
+  flex: 1; height: 4px;
+  background: var(--bg4); border-radius: 2px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%; border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.score-num {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--text2);
+  width: 22px; text-align: right;
+  flex-shrink: 0;
+}
+
+/* MRR VALUE */
+.mrr-val {
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 500;
+  color: var(--green);
+}
+
+/* NEXT ACTION */
+.next-action {
+  font-size: 11px; color: var(--text2);
+  max-width: 180px;
+  overflow: hidden; text-overflow: ellipsis;
+}
+
+/* PHASE BADGE */
+.phase-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  padding: 2px 6px; border-radius: 2px;
+  border: 1px solid var(--border);
+  color: var(--text3);
+  background: var(--bg3);
+}
+
+/* ══════════════════════════════════════════
+   CLIENT DETAIL DRAWER
+══════════════════════════════════════════ */
+.detail-drawer {
+  position: fixed;
+  top: 0; right: 0;
+  width: 420px; height: 100vh;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  z-index: 300;
+  transform: translateX(100%);
+  transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+.detail-drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  padding: 16px 20px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.drawer-close {
+  margin-left: auto;
+  background: none; border: none;
+  color: var(--text3); cursor: pointer;
+  font-size: 18px; line-height: 1;
+  transition: color 0.12s;
+  flex-shrink: 0;
+}
+.drawer-close:hover { color: var(--teal); }
+.drawer-client-name {
+  font-family: var(--font-display);
+  font-size: 18px; font-weight: 700;
+  color: #fff; line-height: 1;
+  margin-bottom: 4px;
+}
+.drawer-client-meta {
+  font-family: var(--font-mono);
+  font-size: 9.5px; color: var(--text3);
+  letter-spacing: 0.1em;
+}
+
+.drawer-body { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; }
+
+.drawer-section-title {
+  font-family: var(--font-mono);
+  font-size: 8.5px; color: var(--teal3);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border2);
+}
+
+.detail-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.detail-field { display: flex; flex-direction: column; gap: 3px; }
+.detail-label {
+  font-family: var(--font-mono);
+  font-size: 8px; color: var(--text3);
+  letter-spacing: 0.15em; text-transform: uppercase;
+}
+.detail-value {
+  font-size: 12px; color: var(--text);
+  font-family: var(--font-body); font-weight: 400;
+}
+.detail-value.mono {
+  font-family: var(--font-mono);
+  font-size: 10.5px; color: var(--teal2);
+}
+.detail-value.highlight { color: var(--green); font-weight: 600; }
+
+.task-list { display: flex; flex-direction: column; gap: 6px; }
+.task-item {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 10px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 3px;
+  font-size: 11.5px; color: var(--text2);
+  transition: background 0.12s;
+}
+.task-item:hover { background: var(--bg4); }
+.task-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  flex-shrink: 0; margin-top: 4px;
+}
+
+.sop-track { display: flex; flex-direction: column; gap: 4px; }
+.sop-phase {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  font-size: 11px;
+}
+.sop-num {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--teal2);
+  width: 24px; flex-shrink: 0;
+}
+.sop-label { flex: 1; color: var(--text2); }
+.sop-status { font-size: 12px; }
+
+/* ══════════════════════════════════════════
+   REVENUE CHART
+══════════════════════════════════════════ */
+.chart-area {
+  display: flex; align-items: flex-end; gap: 4px;
+  height: 80px; padding: 0 4px;
+}
+.chart-bar-wrap {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.chart-bar {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.4s ease, opacity 0.2s;
+  min-height: 2px;
+  cursor: pointer;
+  position: relative;
+}
+.chart-bar:hover { opacity: 0.8; }
+.chart-bar-label {
+  font-family: var(--font-mono);
+  font-size: 7.5px; color: var(--text3);
+  letter-spacing: 0.05em;
+}
+
+/* ══════════════════════════════════════════
+   ACTIVITY FEED
+══════════════════════════════════════════ */
+.activity-feed { display: flex; flex-direction: column; gap: 0; }
+.activity-item {
+  display: flex; gap: 12px; padding: 9px 0;
+  border-bottom: 1px solid var(--border2);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot-col {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  padding-top: 3px;
+}
+.activity-dot-outer {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid var(--teal3);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.activity-dot-inner {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--teal);
+}
+.activity-line {
+  flex: 1; width: 1px;
+  background: var(--border2);
+  margin-top: 2px;
+}
+.activity-content { flex: 1; }
+.activity-title {
+  font-size: 12px; color: var(--text);
+  margin-bottom: 2px; font-weight: 400;
+}
+.activity-title strong { color: #fff; font-weight: 600; }
+.activity-time {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--text3);
+  letter-spacing: 0.08em;
+}
+
+/* ══════════════════════════════════════════
+   LOADING / EMPTY STATES
+══════════════════════════════════════════ */
+.loading-state {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 48px 20px; gap: 12px;
+}
+.loading-spinner {
+  width: 28px; height: 28px;
+  border: 2px solid var(--border);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+.loading-text {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--text3);
+  letter-spacing: 0.15em;
+}
+.empty-state {
+  text-align: center; padding: 32px;
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--text3);
+  letter-spacing: 0.1em; line-height: 1.8;
+}
+.empty-state .big { font-size: 32px; display: block; margin-bottom: 8px; opacity: 0.3; }
+
+/* ══════════════════════════════════════════
+   FILTER BAR
+══════════════════════════════════════════ */
+.filter-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border2);
+  flex-wrap: wrap;
+}
+.filter-input {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 5px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--text);
+  outline: none; width: 200px;
+  transition: border-color 0.15s;
+}
+.filter-input:focus { border-color: var(--teal2); }
+.filter-input::placeholder { color: var(--text3); }
+
+.filter-chip {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  padding: 4px 9px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: transparent; color: var(--text3);
+  cursor: pointer; transition: all 0.12s;
+  letter-spacing: 0.06em;
+}
+.filter-chip:hover, .filter-chip.active {
+  background: var(--teal-glow);
+  border-color: var(--teal3);
+  color: var(--teal);
+}
+
+.filter-right { margin-left: auto; }
+.table-count {
+  font-family: var(--font-mono);
+  font-size: 9px; color: var(--text3);
+}
+
+/* ══════════════════════════════════════════
+   TOOLTIP
+══════════════════════════════════════════ */
+.tooltip {
+  position: absolute;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 5px 9px;
+  font-family: var(--font-mono);
+  font-size: 9.5px; color: var(--text);
+  pointer-events: none; z-index: 400;
+  white-space: nowrap;
+  opacity: 0; transition: opacity 0.12s;
+}
+.tooltip.visible { opacity: 1; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE TWEAKS
+══════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .main { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .kpi-strip { grid-column: 1; grid-template-columns: repeat(3,1fr); }
+  .content { grid-column: 1; }
+  .kpi-cell:nth-child(n+4) { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════ -->
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="brand-logo">M</div>
+    <div class="brand-text">
+      <div class="brand-name">MAYTECK C.S.</div>
+      <div class="brand-sub">COMMAND CENTER · DOC-005</div>
+    </div>
+  </div>
+
+  <nav class="topbar-nav">
+    <button class="nav-btn active" onclick="switchView('clients')">CLIENTS</button>
+    <button class="nav-btn" onclick="switchView('revenue')">REVENUE</button>
+    <button class="nav-btn" onclick="switchView('pipeline')">PIPELINE</button>
+    <button class="nav-btn" onclick="switchView('activity')">ACTIVITY</button>
+  </nav>
+
+  <div class="topbar-right">
+    <div class="status-pill">
+      <div class="status-dot dot-green" id="conn-dot"></div>
+      <span id="conn-label">READY</span>
+    </div>
+    <span id="clock">--:--:--</span>
+    <button class="btn-reload" onclick="loadData()" id="reload-btn">↻ SYNC</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     CONFIG BANNER
+══════════════════════════════════════════ -->
+<div class="config-banner">
+  <span class="config-label">SHEET CSV URL:</span>
+  <input
+    class="config-input"
+    id="sheet-url"
+    placeholder="https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=0"
+    type="text"
+  >
+  <span class="config-help">
+    Publish your Google Sheet: File → Share → Publish to web → CSV →
+    <a href="#" onclick="showSheetHelp()">setup guide</a>
+  </span>
+  <button class="btn-reload" onclick="loadData()">LOAD</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MAIN LAYOUT
+══════════════════════════════════════════ -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section-label">Views</div>
+    <div class="sidebar-item active" onclick="switchView('clients')">
+      <span class="si-icon">◈</span>
+      <span class="si-label">All Clients</span>
+      <span class="si-count" id="count-all">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterByStatus('Active')">
+      <span class="si-icon">●</span>
+      <span class="si-label">Active Retainers</span>
+      <span class="si-count" id="count-active">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterByStatus('Setup')">
+      <span class="si-icon">◐</span>
+      <span class="si-label">In Setup</span>
+      <span class="si-count" id="count-setup">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterByStatus('Prospect')">
+      <span class="si-icon">○</span>
+      <span class="si-label">Prospects</span>
+      <span class="si-count" id="count-prospect">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterByStatus('Paused')">
+      <span class="si-icon">⊘</span>
+      <span class="si-label">Paused</span>
+      <span class="si-count" id="count-paused">0</span>
+    </div>
+
+    <div class="sidebar-section-label" style="margin-top:8px;">Tiers</div>
+    <div class="sidebar-item" onclick="filterByTier('SEO Premium')">
+      <span class="si-icon">★</span>
+      <span class="si-label">SEO Premium</span>
+      <span class="si-count" id="count-premium">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterByTier('SEO Standard')">
+      <span class="si-icon">☆</span>
+      <span class="si-label">SEO Standard</span>
+      <span class="si-count" id="count-standard">0</span>
+    </div>
+    <div class="sidebar-item" onclick="filterByTier('GBP Only')">
+      <span class="si-icon">📍</span>
+      <span class="si-label">GBP Only</span>
+      <span class="si-count" id="count-gbp">0</span>
+    </div>
+
+    <div class="sidebar-section-label" style="margin-top:8px;">Tools</div>
+    <div class="sidebar-item" onclick="exportCSV()">
+      <span class="si-icon">⬇</span>
+      <span class="si-label">Export CSV</span>
+    </div>
+    <div class="sidebar-item" onclick="toggleDemoData()">
+      <span class="si-icon">⚡</span>
+      <span class="si-label">Load Demo Data</span>
+    </div>
+
+    <div class="sidebar-footer">
+      MAYTECK C.S. · DOC-005<br>
+      Command Center v1.1<br>
+      Google Sheets → CSV<br>
+      2026 · Internal Use Only
+    </div>
+  </aside>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi-cell kpi-teal">
+      <div class="kpi-label">Monthly MRR</div>
+      <div class="kpi-value" id="kpi-mrr">$0</div>
+      <div class="kpi-sub"><span class="kpi-delta delta-flat" id="kpi-mrr-delta">— no data</span></div>
+    </div>
+    <div class="kpi-cell kpi-green">
+      <div class="kpi-label">Active Clients</div>
+      <div class="kpi-value" id="kpi-clients">0</div>
+      <div class="kpi-sub kpi-delta delta-flat" id="kpi-clients-sub">retainers</div>
+    </div>
+    <div class="kpi-cell kpi-gold">
+      <div class="kpi-label">Avg Client Score</div>
+      <div class="kpi-value" id="kpi-score">—</div>
+      <div class="kpi-sub"><span class="kpi-delta" id="kpi-score-sub">out of 30</span></div>
+    </div>
+    <div class="kpi-cell kpi-blue">
+      <div class="kpi-label">Open Actions</div>
+      <div class="kpi-value" id="kpi-actions">0</div>
+      <div class="kpi-sub kpi-delta delta-flat" id="kpi-actions-sub">tasks pending</div>
+    </div>
+    <div class="kpi-cell kpi-red">
+      <div class="kpi-label">At-Risk</div>
+      <div class="kpi-value" id="kpi-risk">0</div>
+      <div class="kpi-sub kpi-delta delta-flat">score &lt; 15 or paused</div>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content" id="main-content">
+
+    <!-- VIEW: CLIENTS -->
+    <div id="view-clients">
+      <div class="panel">
+        <div class="filter-bar">
+          <input class="filter-input" id="search-input" placeholder="Search clients, domains, cities..." oninput="applyFilters()">
+          <button class="filter-chip active" id="chip-all" onclick="setStatusFilter('all', this)">ALL</button>
+          <button class="filter-chip" id="chip-active" onclick="setStatusFilter('Active', this)">ACTIVE</button>
+          <button class="filter-chip" id="chip-setup" onclick="setStatusFilter('Setup', this)">SETUP</button>
+          <button class="filter-chip" id="chip-prospect" onclick="setStatusFilter('Prospect', this)">PROSPECT</button>
+          <button class="filter-chip" id="chip-paused" onclick="setStatusFilter('Paused', this)">PAUSED</button>
+          <span class="table-count filter-right" id="table-count">0 clients</span>
+        </div>
+        <div class="panel-header">
+          <div class="panel-accent accent-teal"></div>
+          <div class="panel-title">Client Roster</div>
+          <div class="panel-meta" id="last-sync">Not synced</div>
+        </div>
+        <div class="client-table-wrap">
+          <table class="client-table" id="client-table">
+            <thead>
+              <tr>
+                <th onclick="sortTable('name')">CLIENT</th>
+                <th onclick="sortTable('domain')">DOMAIN</th>
+                <th onclick="sortTable('tier')">TIER</th>
+                <th onclick="sortTable('status')">STATUS</th>
+                <th onclick="sortTable('mrr')">MRR</th>
+                <th onclick="sortTable('score')">AUDIT SCORE</th>
+                <th onclick="sortTable('sop_phase')">SOP PHASE</th>
+                <th onclick="sortTable('next_action')">NEXT ACTION</th>
+                <th onclick="sortTable('report_due')">REPORT DUE</th>
+              </tr>
+            </thead>
+            <tbody id="client-tbody">
+              <tr><td colspan="9"><div class="loading-state">
+                <div class="empty-state">
+                  <span class="big">◈</span>
+                  Paste your Google Sheet CSV URL above and click LOAD<br>
+                  or click <strong>Load Demo Data</strong> in the sidebar to preview
+                </div>
+              </div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: REVENUE -->
+    <div id="view-revenue" style="display:none;">
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-accent accent-green"></div>
+            <div class="panel-title">MRR by Tier</div>
+          </div>
+          <div class="panel-body">
+            <div id="mrr-breakdown" class="activity-feed"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-accent accent-gold"></div>
+            <div class="panel-title">Revenue Projection</div>
+            <div class="panel-meta">Based on active clients</div>
+          </div>
+          <div class="panel-body">
+            <div id="revenue-chart" class="chart-area"></div>
+            <div style="margin-top:12px;font-family:var(--font-mono);font-size:9px;color:var(--text3);">Monthly bars = current MRR projected forward</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-accent accent-teal"></div>
+          <div class="panel-title">Goal Progress — $20k/Month Target</div>
+        </div>
+        <div class="panel-body" id="goal-panel"></div>
+      </div>
+    </div>
+
+    <!-- VIEW: PIPELINE -->
+    <div id="view-pipeline" style="display:none;">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-accent accent-purple"></div>
+          <div class="panel-title">Pipeline — SOP Phase Tracker</div>
+          <div class="panel-meta">Clients by current phase</div>
+        </div>
+        <div class="panel-body" id="pipeline-content"></div>
+      </div>
+    </div>
+
+    <!-- VIEW: ACTIVITY -->
+    <div id="view-activity" style="display:none;">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-accent accent-teal"></div>
+          <div class="panel-title">Activity Feed</div>
+          <div class="panel-meta">Next actions &amp; due items</div>
+        </div>
+        <div class="panel-body">
+          <div id="activity-feed-content" class="activity-feed"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CLIENT DETAIL DRAWER -->
+<div class="detail-drawer" id="detail-drawer">
+  <div class="drawer-header">
+    <div>
+      <div class="drawer-client-name" id="drawer-name">—</div>
+      <div class="drawer-client-meta" id="drawer-meta">—</div>
+    </div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<!-- TOOLTIP -->
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════════════════
+let allClients = [];
+let filteredClients = [];
+let sortKey = 'name';
+let sortDir = 1;
+let statusFilter = 'all';
+let usingDemo = false;
+
+// ══════════════════════════════════════════════════════════════════════════
+// DEMO DATA — mirrors expected Google Sheet column structure
+// Columns: name, domain, city, industry, tier, status, mrr, audit_score,
+//          sop_phase, next_action, report_due, notes, phone, email,
+//          github_repo, gbp_status, review_count, start_date
+// ══════════════════════════════════════════════════════════════════════════
+const DEMO_DATA = [
+  { name:"Ace Mobile Detail",    domain:"acemobiledetail.com",    city:"Huntington Beach", industry:"Auto Detailing",  tier:"SEO Premium",  status:"Active",   mrr:1200, audit_score:26, sop_phase:"05 — Reporting",        next_action:"Monthly report due",       report_due:"2026-04-01", notes:"Top client. Ceramic coating page needs update.", phone:"714-555-0101", email:"ace@email.com",    github_repo:"client-ace-detail-site",   gbp_status:"Optimized", review_count:62,  start_date:"2025-09-15" },
+  { name:"OC Locksmith Pro",     domain:"oclocksmithpro.com",     city:"Costa Mesa",       industry:"Locksmith",       tier:"SEO Standard", status:"Active",   mrr:750,  audit_score:21, sop_phase:"05 — Reporting",        next_action:"Add FAQ schema to 2 pages", report_due:"2026-04-01", notes:"Review velocity low — ask owner to solicit.",   phone:"949-555-0202", email:"oc@lock.com",      github_repo:"client-oc-locksmith-site", gbp_status:"Active",    review_count:28,  start_date:"2025-11-01" },
+  { name:"HB Window Tint",       domain:"hbwindowtint.com",       city:"Huntington Beach", industry:"Window Tinting",  tier:"GBP Only",     status:"Active",   mrr:350,  audit_score:17, sop_phase:"02 — GBP Power-Up",     next_action:"Upload 6 more geo-tagged photos", report_due:"2026-04-05", notes:"GBP just verified. Site build upsell in Q2.", phone:"714-555-0303", email:"hb@tint.com",      github_repo:"",                         gbp_status:"New",       review_count:9,   start_date:"2026-01-10" },
+  { name:"Surf City Pressure",   domain:"surfcitypressure.com",   city:"Huntington Beach", industry:"Pressure Washing",tier:"SEO Standard", status:"Setup",    mrr:750,  audit_score:14, sop_phase:"01 — Tech Foundation",  next_action:"DNS verification + Lighthouse audit", report_due:"—",          notes:"Domain registered. CF Pages deploying now.",   phone:"714-555-0404", email:"surf@pressure.com",github_repo:"client-surf-pressure-site","gbp_status":"Not Claimed",review_count:3,  start_date:"2026-02-20" },
+  { name:"Newport Notary Now",   domain:"newportnotarynow.com",   city:"Newport Beach",    industry:"Mobile Notary",   tier:"SEO Premium",  status:"Active",   mrr:1200, audit_score:24, sop_phase:"05 — Reporting",        next_action:"Blog post: notary cost Newport Beach", report_due:"2026-04-01", notes:"High engagement client. Wants referral page.", phone:"949-555-0505", email:"nn@notary.com",    github_repo:"client-newport-notary",    gbp_status:"Optimized", review_count:44,  start_date:"2025-10-05" },
+  { name:"Fountain Valley HVAC", domain:"fvhvac.com",             city:"Fountain Valley",  industry:"HVAC",            tier:"SEO Standard", status:"Active",   mrr:750,  audit_score:19, sop_phase:"04 — Schema Deploy",    next_action:"Validate Service schema on /ac-repair", report_due:"2026-04-03", notes:"Seasonal traffic spike incoming — June content ready?", phone:"714-555-0606", email:"fv@hvac.com",      github_repo:"client-fv-hvac-site",      gbp_status:"Active",    review_count:31,  start_date:"2025-12-01" },
+  { name:"Irvine Detail Kings",  domain:"irvinedetailkings.com",  city:"Irvine",           industry:"Auto Detailing",  tier:"SEO Standard", status:"Active",   mrr:750,  audit_score:22, sop_phase:"05 — Reporting",        next_action:"Competitor gap: ceramic coating page", report_due:"2026-04-02", notes:"Added ceramic coating service. Page needed.",  phone:"949-555-0707", email:"irvine@detail.com",github_repo:"client-irvine-detail",      gbp_status:"Active",    review_count:19,  start_date:"2026-01-15" },
+  { name:"Mesa Locksmith 24/7",  domain:"mesalocksmith247.com",   city:"Mesa Verde",       industry:"Locksmith",       tier:"GBP Only",     status:"Paused",   mrr:0,    audit_score:11, sop_phase:"02 — GBP Power-Up",     next_action:"Follow up: payment overdue 14 days",  report_due:"—",          notes:"Invoice #INV-041 outstanding. Pause confirmed.", phone:"714-555-0808", email:"mesa@lock.com",    github_repo:"",                         gbp_status:"Incomplete",review_count:5,   start_date:"2026-01-01" },
+  { name:"SoCal Dog Groom Co",   domain:"socalgrooming.com",      city:"Garden Grove",     industry:"Pet Services",    tier:"SEO Premium",  status:"Active",   mrr:1200, audit_score:23, sop_phase:"03 — Content",          next_action:"Write 2 service pages: cats + mobile", report_due:"2026-04-01", notes:"Expanding to cat grooming. New page required.", phone:"714-555-0909", email:"socal@groom.com",  github_repo:"client-socal-groom-site",  gbp_status:"Optimized", review_count:88,  start_date:"2025-08-20" },
+  { name:"Seal Beach Handyman",  domain:"",                       city:"Seal Beach",       industry:"Handyman",        tier:"—",            status:"Prospect", mrr:0,    audit_score:8,  sop_phase:"00 — Prospecting",      next_action:"Send audit report + P-09 summary",    report_due:"—",          notes:"Audit complete. Score 8/30. Critical findings.", phone:"562-555-1010", email:"sb@handyman.com",  github_repo:"",                         gbp_status:"Not Claimed",review_count:0,  start_date:"" },
+  { name:"LB Mobile Ceramic",    domain:"",                       city:"Long Beach",       industry:"Ceramic Coating", tier:"—",            status:"Prospect", mrr:0,    audit_score:12, sop_phase:"00 — Prospecting",      next_action:"Discovery call scheduled 4/5",        report_due:"—",          notes:"Interested in premium retainer. Strong close.", phone:"562-555-1111", email:"lb@ceramic.com",   github_repo:"",                         gbp_status:"Incomplete",review_count:7,  start_date:"" },
+];
+
+// ══════════════════════════════════════════════════════════════════════════
+// CSV PARSING — expects header row matching column names above
+// ══════════════════════════════════════════════════════════════════════════
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/\s+/g,'_').replace(/[^a-z0-9_]/g,''));
+  return lines.slice(1).map(line => {
+    // Handle quoted CSV fields
+    const vals = [];
+    let inQ = false, cur = '';
+    for (let i = 0; i < line.length; i++) {
+      if (line[i] === '"') { inQ = !inQ; }
+      else if (line[i] === ',' && !inQ) { vals.push(cur.trim()); cur = ''; }
+      else { cur += line[i]; }
+    }
+    vals.push(cur.trim());
+    const obj = {};
+    headers.forEach((h, i) => { obj[h] = (vals[i] || '').replace(/^"|"$/g,''); });
+    obj.mrr = parseFloat(obj.mrr) || 0;
+    obj.audit_score = parseInt(obj.audit_score) || 0;
+    obj.review_count = parseInt(obj.review_count) || 0;
+    return obj;
+  }).filter(c => c.name);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// DATA LOAD
+// ══════════════════════════════════════════════════════════════════════════
+async function loadData() {
+  const url = document.getElementById('sheet-url').value.trim();
+  if (!url) { toggleDemoData(); return; }
+
+  setConnStatus('loading');
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const csv = await res.text();
+    allClients = parseCSV(csv);
+    usingDemo = false;
+    setConnStatus('connected');
+    render();
+  } catch(e) {
+    setConnStatus('error');
+    console.error('Sheet load error:', e);
+    showToast('Failed to load sheet. Check URL and sharing settings.');
+  }
+}
+
+function toggleDemoData() {
+  allClients = DEMO_DATA.map(d => ({...d}));
+  usingDemo = true;
+  setConnStatus('demo');
+  render();
+}
+
+function setConnStatus(state) {
+  const dot = document.getElementById('conn-dot');
+  const label = document.getElementById('conn-label');
+  const states = {
+    ready:     { cls:'dot-green',  text:'READY' },
+    loading:   { cls:'dot-amber',  text:'SYNCING' },
+    connected: { cls:'dot-green',  text:'LIVE' },
+    error:     { cls:'dot-red',    text:'ERROR' },
+    demo:      { cls:'dot-amber',  text:'DEMO' },
+  };
+  const s = states[state] || states.ready;
+  dot.className = 'status-dot ' + s.cls;
+  label.textContent = s.text;
+  if (state !== 'loading') {
+    document.getElementById('last-sync').textContent =
+      state === 'error' ? 'Sync failed' : 'Synced ' + new Date().toLocaleTimeString();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ══════════════════════════════════════════════════════════════════════════
+function render() {
+  applyFilters();
+  renderKPIs();
+  updateSidebarCounts();
+  renderRevenue();
+  renderPipeline();
+  renderActivity();
+}
+
+function applyFilters() {
+  const search = document.getElementById('search-input').value.toLowerCase();
+  filteredClients = allClients.filter(c => {
+    const matchStatus = statusFilter === 'all' || (c.status||'').toLowerCase() === statusFilter.toLowerCase();
+    const matchSearch = !search ||
+      (c.name||'').toLowerCase().includes(search) ||
+      (c.domain||'').toLowerCase().includes(search) ||
+      (c.city||'').toLowerCase().includes(search) ||
+      (c.industry||'').toLowerCase().includes(search) ||
+      (c.tier||'').toLowerCase().includes(search);
+    return matchStatus && matchSearch;
+  });
+  filteredClients.sort((a,b) => {
+    let av = a[sortKey]||'', bv = b[sortKey]||'';
+    if (typeof av === 'number') return (av - bv) * sortDir;
+    return String(av).localeCompare(String(bv)) * sortDir;
+  });
+  renderTable();
+  document.getElementById('table-count').textContent = `${filteredClients.length} client${filteredClients.length !== 1 ? 's' : ''}`;
+}
+
+function renderKPIs() {
+  const active = allClients.filter(c => c.status === 'Active');
+  const mrr = active.reduce((s,c) => s + (c.mrr||0), 0);
+  const scores = allClients.filter(c => c.audit_score > 0).map(c => c.audit_score);
+  const avgScore = scores.length ? (scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1) : '—';
+  const openActions = allClients.filter(c => c.next_action && c.status !== 'Churned').length;
+  const atRisk = allClients.filter(c => c.audit_score > 0 && c.audit_score < 15 || c.status === 'Paused').length;
+
+  document.getElementById('kpi-mrr').textContent = '$' + mrr.toLocaleString();
+  document.getElementById('kpi-mrr-delta').textContent = `$${(20000-mrr).toLocaleString()} to $20k goal`;
+  document.getElementById('kpi-mrr-delta').className = 'kpi-delta ' + (mrr >= 20000 ? 'delta-up' : 'delta-flat');
+
+  document.getElementById('kpi-clients').textContent = active.length;
+  document.getElementById('kpi-clients-sub').textContent = `of ${allClients.length} total clients`;
+
+  document.getElementById('kpi-score').textContent = avgScore;
+  const scoreColor = avgScore >= 22 ? 'delta-up' : avgScore >= 15 ? 'delta-flat' : 'delta-down';
+  document.getElementById('kpi-score-sub').className = 'kpi-delta ' + scoreColor;
+
+  document.getElementById('kpi-actions').textContent = openActions;
+  document.getElementById('kpi-risk').textContent = atRisk;
+}
+
+function updateSidebarCounts() {
+  const count = s => allClients.filter(c => c.status === s).length;
+  document.getElementById('count-all').textContent = allClients.length;
+  document.getElementById('count-active').textContent = count('Active');
+  document.getElementById('count-setup').textContent = count('Setup');
+  document.getElementById('count-prospect').textContent = count('Prospect');
+  document.getElementById('count-paused').textContent = count('Paused');
+  document.getElementById('count-premium').textContent = allClients.filter(c=>c.tier==='SEO Premium').length;
+  document.getElementById('count-standard').textContent = allClients.filter(c=>c.tier==='SEO Standard').length;
+  document.getElementById('count-gbp').textContent = allClients.filter(c=>c.tier==='GBP Only').length;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('client-tbody');
+  if (!filteredClients.length) {
+    tbody.innerHTML = `<tr><td colspan="9"><div class="empty-state"><span class="big">◈</span>No clients match the current filter</div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filteredClients.map((c, idx) => {
+    const statusBadge = statusBadgeHTML(c.status);
+    const tierBadge = tierBadgeHTML(c.tier);
+    const mrrVal = c.mrr > 0 ? `<span class="mrr-val">$${c.mrr.toLocaleString()}</span>` : '<span style="color:var(--text3)">—</span>';
+    const scoreBar = c.audit_score > 0 ? scoreBarHTML(c.audit_score) : '<span style="color:var(--text3)">not audited</span>';
+    const phase = c.sop_phase ? `<span class="phase-badge">${c.sop_phase.split(' — ')[0]}</span>` : '';
+    const domainLink = c.domain ? `<a href="https://${c.domain}" target="_blank">${c.domain}</a>` : '<span style="color:var(--text3)">—</span>';
+    const nextAction = c.next_action ? `<span class="next-action" title="${c.next_action}">${c.next_action}</span>` : '—';
+    const reportDue = c.report_due && c.report_due !== '—' ? formatDate(c.report_due) : '<span style="color:var(--text3)">—</span>';
+
+    return `<tr onclick="openDrawer(${idx})" style="animation-delay:${idx*0.02}s">
+      <td><span class="td-name">${c.name}</span><br><span style="font-size:10px;color:var(--text3)">${c.city||''}</span></td>
+      <td class="td-domain">${domainLink}</td>
+      <td>${tierBadge}</td>
+      <td>${statusBadge}</td>
+      <td>${mrrVal}</td>
+      <td>${scoreBar}</td>
+      <td>${phase}</td>
+      <td>${nextAction}</td>
+      <td style="font-family:var(--font-mono);font-size:10px;">${reportDue}</td>
+    </tr>`;
+  }).join('');
+}
+
+function statusBadgeHTML(status) {
+  const map = {
+    'Active':'badge-active','Setup':'badge-setup','Paused':'badge-paused',
+    'Prospect':'badge-prospect','Churned':'badge-churned'
+  };
+  return `<span class="badge ${map[status]||'badge-churned'}">${status||'—'}</span>`;
+}
+
+function tierBadgeHTML(tier) {
+  const map = {
+    'SEO Premium':'tier-premium','SEO Standard':'tier-standard',
+    'GBP Only':'tier-gbp'
+  };
+  const cls = map[tier] || '';
+  return cls ? `<span class="tier ${cls}">${tier}</span>` : `<span style="color:var(--text3)">—</span>`;
+}
+
+function scoreBarHTML(score) {
+  const pct = Math.min(100, (score/30)*100);
+  const color = score >= 22 ? 'var(--green)' : score >= 15 ? 'var(--gold)' : 'var(--red)';
+  return `<div class="score-bar-wrap">
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    <span class="score-num">${score}</span>
+  </div>`;
+}
+
+function formatDate(dateStr) {
+  if (!dateStr || dateStr === '—') return '—';
+  try {
+    const d = new Date(dateStr);
+    const now = new Date();
+    const diff = Math.floor((d - now) / 86400000);
+    const formatted = d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+    if (diff < 0) return `<span style="color:var(--red)">${formatted} (overdue)</span>`;
+    if (diff <= 3) return `<span style="color:var(--amber)">${formatted}</span>`;
+    return formatted;
+  } catch { return dateStr; }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// REVENUE VIEW
+// ══════════════════════════════════════════════════════════════════════════
+function renderRevenue() {
+  const active = allClients.filter(c => c.status === 'Active');
+  const totalMRR = active.reduce((s,c) => s+c.mrr, 0);
+
+  // MRR breakdown by tier
+  const tiers = ['SEO Premium','SEO Standard','GBP Only'];
+  const tierColors = ['var(--gold)','var(--teal)','var(--blue)'];
+  let breakdownHTML = '';
+  tiers.forEach((tier,i) => {
+    const clients = active.filter(c => c.tier === tier);
+    const tierMRR = clients.reduce((s,c)=>s+c.mrr,0);
+    const pct = totalMRR > 0 ? ((tierMRR/totalMRR)*100).toFixed(0) : 0;
+    if (clients.length === 0) return;
+    breakdownHTML += `
+      <div class="activity-item">
+        <div class="activity-dot-col">
+          <div class="activity-dot-outer" style="border-color:${tierColors[i]}">
+            <div class="activity-dot-inner" style="background:${tierColors[i]}"></div>
+          </div>
+          <div class="activity-line"></div>
+        </div>
+        <div class="activity-content">
+          <div class="activity-title"><strong>${tier}</strong> — ${clients.length} client${clients.length>1?'s':''}</div>
+          <div class="activity-time">$${tierMRR.toLocaleString()}/mo · ${pct}% of MRR</div>
+        </div>
+        <div style="font-family:var(--font-mono);font-size:12px;color:${tierColors[i]}">$${tierMRR.toLocaleString()}</div>
+      </div>`;
+  });
+  document.getElementById('mrr-breakdown').innerHTML = breakdownHTML || '<div class="empty-state">No active clients</div>';
+
+  // Revenue bars (projected 6 months)
+  const maxVal = Math.max(totalMRR * 1.3, 20000);
+  const months = ['NOW','M+1','M+2','M+3','M+4','M+5'];
+  const growth = [1, 1.04, 1.08, 1.12, 1.16, 1.20];
+  let chartHTML = '';
+  months.forEach((m, i) => {
+    const val = Math.round(totalMRR * growth[i]);
+    const h = Math.max(4, Math.round((val / maxVal) * 80));
+    const color = val >= 20000 ? 'var(--green)' : i === 0 ? 'var(--teal)' : 'var(--teal3)';
+    chartHTML += `<div class="chart-bar-wrap">
+      <div class="chart-bar" style="height:${h}px;background:${color}" title="$${val.toLocaleString()}/mo"></div>
+      <div class="chart-bar-label">${m}</div>
+    </div>`;
+  });
+  document.getElementById('revenue-chart').innerHTML = chartHTML;
+
+  // Goal panel
+  const pct = Math.min(100, (totalMRR/20000)*100);
+  const goalColor = pct >= 100 ? 'var(--green)' : pct >= 60 ? 'var(--gold)' : 'var(--teal)';
+  document.getElementById('goal-panel').innerHTML = `
+    <div style="margin-bottom:10px;font-family:var(--font-mono);font-size:10px;color:var(--text3)">
+      Current MRR: <span style="color:#fff;font-size:13px;font-weight:600">$${totalMRR.toLocaleString()}</span>
+      &nbsp;/&nbsp; Target: <span style="color:var(--teal)">$20,000</span>
+      &nbsp;/&nbsp; Gap: <span style="color:${pct>=100?'var(--green)':'var(--red)'}">$${Math.max(0,20000-totalMRR).toLocaleString()}</span>
+    </div>
+    <div style="height:20px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-bottom:8px;">
+      <div style="height:100%;width:${pct}%;background:${goalColor};border-radius:3px;transition:width 0.6s ease;"></div>
+    </div>
+    <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3)">${pct.toFixed(1)}% of $20k/month goal achieved · ${active.length} active clients · avg $${active.length?Math.round(totalMRR/active.length):0}/client</div>`;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// PIPELINE VIEW
+// ══════════════════════════════════════════════════════════════════════════
+function renderPipeline() {
+  const phases = [
+    '00 — Prospecting','01 — Tech Foundation','02 — GBP Power-Up',
+    '03 — Content','04 — Schema Deploy','05 — Reporting','06 — Handoff'
+  ];
+  const phaseColors = ['var(--blue)','var(--amber)','var(--teal)','var(--purple)','var(--gold)','var(--green)','var(--text2)'];
+
+  let html = '<div style="display:flex;flex-direction:column;gap:12px;">';
+  phases.forEach((phase, i) => {
+    const clients = allClients.filter(c => (c.sop_phase||'').startsWith(phase.split(' — ')[0]));
+    if (clients.length === 0) return;
+    html += `<div>
+      <div style="font-family:var(--font-mono);font-size:9px;color:${phaseColors[i]};letter-spacing:0.15em;margin-bottom:6px;">${phase}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;">
+        ${clients.map(c => `
+          <div onclick="openDrawerByName('${c.name}')" style="cursor:pointer;padding:6px 10px;background:var(--bg3);border:1px solid var(--border2);border-left:3px solid ${phaseColors[i]};border-radius:2px;font-size:11px;transition:background 0.12s;" onmouseover="this.style.background='var(--bg4)'" onmouseout="this.style.background='var(--bg3)'">
+            <div style="color:#fff;font-weight:600;margin-bottom:2px;">${c.name}</div>
+            <div style="font-family:var(--font-mono);font-size:9px;color:var(--text3)">${c.next_action||'—'}</div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  document.getElementById('pipeline-content').innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// ACTIVITY VIEW
+// ══════════════════════════════════════════════════════════════════════════
+function renderActivity() {
+  const actionClients = allClients
+    .filter(c => c.next_action && c.status !== 'Churned')
+    .sort((a,b) => {
+      if (a.report_due && b.report_due && a.report_due !== '—' && b.report_due !== '—') {
+        return new Date(a.report_due) - new Date(b.report_due);
+      }
+      return 0;
+    });
+
+  if (!actionClients.length) {
+    document.getElementById('activity-feed-content').innerHTML = '<div class="empty-state"><span class="big">✓</span>No pending actions</div>';
+    return;
+  }
+
+  const statusColors = {'Active':'var(--green)','Setup':'var(--gold)','Paused':'var(--red)','Prospect':'var(--blue)'};
+
+  document.getElementById('activity-feed-content').innerHTML = actionClients.map((c,i) => {
+    const color = statusColors[c.status] || 'var(--text3)';
+    const due = c.report_due && c.report_due !== '—' ? ` · Report due: ${c.report_due}` : '';
+    return `<div class="activity-item">
+      <div class="activity-dot-col">
+        <div class="activity-dot-outer" style="border-color:${color}">
+          <div class="activity-dot-inner" style="background:${color}"></div>
+        </div>
+        ${i < actionClients.length-1 ? '<div class="activity-line"></div>' : ''}
+      </div>
+      <div class="activity-content">
+        <div class="activity-title"><strong>${c.name}</strong> — ${c.next_action}</div>
+        <div class="activity-time">${c.status} · ${c.tier||'—'}${due}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// DRAWER
+// ══════════════════════════════════════════════════════════════════════════
+function openDrawer(idx) {
+  const c = filteredClients[idx];
+  if (!c) return;
+
+  document.getElementById('drawer-name').textContent = c.name;
+  document.getElementById('drawer-meta').textContent =
+    [c.industry, c.city, c.tier].filter(Boolean).join(' · ');
+
+  const sopPhases = [
+    {num:'00', label:'Domain Acquisition', done: c.domain ? true : false},
+    {num:'01', label:'Technical Foundation', done: ['02','03','04','05','06'].some(n => (c.sop_phase||'').startsWith(n))},
+    {num:'02', label:'GBP Power-Up', done: ['03','04','05','06'].some(n => (c.sop_phase||'').startsWith(n))},
+    {num:'03', label:'AI Content Production', done: ['04','05','06'].some(n => (c.sop_phase||'').startsWith(n))},
+    {num:'04', label:'Schema Deployment', done: ['05','06'].some(n => (c.sop_phase||'').startsWith(n))},
+    {num:'05', label:'Reporting Cycle', done: (c.sop_phase||'').startsWith('05') || (c.sop_phase||'').startsWith('06')},
+    {num:'06', label:'Asset Handoff', done: (c.sop_phase||'').startsWith('06')},
+  ];
+  const currentPhaseNum = (c.sop_phase||'00').split(' ')[0];
+
+  document.getElementById('drawer-body').innerHTML = `
+    <div>
+      <div class="drawer-section-title">Client Overview</div>
+      <div class="detail-grid">
+        <div class="detail-field"><div class="detail-label">STATUS</div><div class="detail-value">${statusBadgeHTML(c.status)}</div></div>
+        <div class="detail-field"><div class="detail-label">MRR</div><div class="detail-value highlight">$${c.mrr > 0 ? c.mrr.toLocaleString() : '0'}/mo</div></div>
+        <div class="detail-field"><div class="detail-label">DOMAIN</div><div class="detail-value mono">${c.domain || '— not set'}</div></div>
+        <div class="detail-field"><div class="detail-label">CITY</div><div class="detail-value">${c.city || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">INDUSTRY</div><div class="detail-value">${c.industry || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">TIER</div><div class="detail-value">${tierBadgeHTML(c.tier)}</div></div>
+        <div class="detail-field"><div class="detail-label">START DATE</div><div class="detail-value mono">${c.start_date || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">AUDIT SCORE</div><div class="detail-value">${c.audit_score > 0 ? scoreBarHTML(c.audit_score) : '—'}</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="drawer-section-title">Contact & Accounts</div>
+      <div class="detail-grid">
+        <div class="detail-field"><div class="detail-label">PHONE</div><div class="detail-value mono">${c.phone || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">EMAIL</div><div class="detail-value mono">${c.email || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">GITHUB REPO</div><div class="detail-value mono">${c.github_repo || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">GBP STATUS</div><div class="detail-value">${c.gbp_status || '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">REVIEW COUNT</div><div class="detail-value">${c.review_count > 0 ? c.review_count + ' reviews' : '—'}</div></div>
+        <div class="detail-field"><div class="detail-label">REPORT DUE</div><div class="detail-value mono">${c.report_due || '—'}</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="drawer-section-title">Next Action</div>
+      <div class="task-list">
+        <div class="task-item">
+          <div class="task-dot" style="background:var(--teal)"></div>
+          <div>${c.next_action || 'No action pending'}</div>
+        </div>
+        ${c.notes ? `<div class="task-item" style="border-color:rgba(232,168,48,0.2);">
+          <div class="task-dot" style="background:var(--gold)"></div>
+          <div style="color:var(--text2);font-size:11px;">${c.notes}</div>
+        </div>` : ''}
+      </div>
+    </div>
+
+    <div>
+      <div class="drawer-section-title">SOP Phase Tracker</div>
+      <div class="sop-track">
+        ${sopPhases.map(ph => {
+          const isCurrent = ph.num === currentPhaseNum;
+          const status = ph.done ? '✓' : isCurrent ? '▶' : '○';
+          const color = ph.done ? 'var(--green)' : isCurrent ? 'var(--teal)' : 'var(--text3)';
+          return `<div class="sop-phase" style="${isCurrent ? 'border-color:var(--teal3);background:var(--bg4)' : ''}">
+            <div class="sop-num" style="color:${color}">§${ph.num}</div>
+            <div class="sop-label" style="color:${ph.done?'var(--text2)':isCurrent?'#fff':'var(--text3)'}">${ph.label}</div>
+            <div class="sop-status" style="color:${color}">${status}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('detail-drawer').classList.add('open');
+}
+
+function openDrawerByName(name) {
+  const idx = filteredClients.findIndex(c => c.name === name);
+  if (idx >= 0) openDrawer(idx);
+}
+
+function closeDrawer() {
+  document.getElementById('detail-drawer').classList.remove('open');
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SORTING & FILTERING
+// ══════════════════════════════════════════════════════════════════════════
+let _lastSortKey = '';
+function sortTable(key) {
+  if (sortKey === key) { sortDir *= -1; }
+  else { sortKey = key; sortDir = 1; }
+  document.querySelectorAll('.client-table th').forEach(th => {
+    th.classList.remove('sort-asc','sort-desc');
+  });
+  const ths = document.querySelectorAll('.client-table th');
+  const keyMap = ['name','domain','tier','status','mrr','audit_score','sop_phase','next_action','report_due'];
+  const idx = keyMap.indexOf(key);
+  if (idx >= 0) ths[idx].classList.add(sortDir === 1 ? 'sort-asc' : 'sort-desc');
+  applyFilters();
+}
+
+function setStatusFilter(status, btn) {
+  statusFilter = status;
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function filterByStatus(status) {
+  statusFilter = status;
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  const chip = document.getElementById('chip-' + status.toLowerCase());
+  if (chip) chip.classList.add('active');
+  applyFilters();
+  switchView('clients');
+}
+
+function filterByTier(tier) {
+  statusFilter = 'all';
+  document.getElementById('search-input').value = tier;
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  document.getElementById('chip-all').classList.add('active');
+  applyFilters();
+  switchView('clients');
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// VIEW SWITCHING
+// ══════════════════════════════════════════════════════════════════════════
+function switchView(view) {
+  ['clients','revenue','pipeline','activity'].forEach(v => {
+    document.getElementById('view-' + v).style.display = v === view ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  const btnMap = {clients:0, revenue:1, pipeline:2, activity:3};
+  document.querySelectorAll('.nav-btn')[btnMap[view]].classList.add('active');
+  if (view === 'revenue') renderRevenue();
+  if (view === 'pipeline') renderPipeline();
+  if (view === 'activity') renderActivity();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// EXPORT
+// ══════════════════════════════════════════════════════════════════════════
+function exportCSV() {
+  if (!allClients.length) { alert('No data to export.'); return; }
+  const keys = Object.keys(allClients[0]);
+  const rows = [keys.join(','), ...allClients.map(c =>
+    keys.map(k => `"${(c[k]||'').toString().replace(/"/g,'""')}"`).join(',')
+  )];
+  const blob = new Blob([rows.join('\n')], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `mayteck-clients-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SHEET HELP MODAL
+// ══════════════════════════════════════════════════════════════════════════
+function showSheetHelp() {
+  alert(
+    'GOOGLE SHEET SETUP GUIDE\n\n' +
+    '1. Create a Google Sheet with these column headers in Row 1:\n' +
+    '   name, domain, city, industry, tier, status, mrr, audit_score,\n' +
+    '   sop_phase, next_action, report_due, notes, phone, email,\n' +
+    '   github_repo, gbp_status, review_count, start_date\n\n' +
+    '2. Fill in your client data starting at Row 2.\n\n' +
+    '3. Publish to web:\n' +
+    '   File → Share → Publish to web\n' +
+    '   → Select sheet → CSV format → Publish\n\n' +
+    '4. Copy the CSV link and paste it into the URL field above.\n\n' +
+    '5. Click LOAD — data refreshes each time you click SYNC.\n\n' +
+    'TIER values: SEO Premium | SEO Standard | GBP Only\n' +
+    'STATUS values: Active | Setup | Paused | Prospect | Churned\n' +
+    'SOP_PHASE: start with the phase number (e.g. "05 — Reporting")'
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// TOAST (simple status message)
+// ══════════════════════════════════════════════════════════════════════════
+function showToast(msg) {
+  const t = document.getElementById('tooltip');
+  t.textContent = msg;
+  t.style.bottom = '20px';
+  t.style.right = '20px';
+  t.style.top = 'auto';
+  t.style.left = 'auto';
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 3000);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// CLOCK
+// ══════════════════════════════════════════════════════════════════════════
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-US', {hour12:false});
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Close drawer on outside click
+document.addEventListener('click', e => {
+  const drawer = document.getElementById('detail-drawer');
+  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !e.target.closest('.client-table')) {
+    closeDrawer();
+  }
+});
+
+// ══════════════════════════════════════════════════════════════════════════
+// INIT — auto-load demo data on start
+// ══════════════════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  toggleDemoData();
+});
+</script>
+
+</body>
+</html>
