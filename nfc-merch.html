@@ -372,6 +372,16 @@
     // Adjust the 0.3 to change the speed of the parallax effect
     parallax.style.transform = `translateY(${distance * 0.3}px)`;
 });
+		const video = document.getElementById('heroVideo');
+
+video.addEventListener('timeupdate', function() {
+    // Check if we are at the end of the video
+    if (video.currentTime >= video.duration - 0.2) {
+        // Jump back 3 seconds and keep playing forward
+        video.currentTime = video.duration - 3.0;
+        video.play();
+    }
+});
     </script>
 </body>
 </html>
