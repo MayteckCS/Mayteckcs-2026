@@ -97,6 +97,71 @@
         .product-card { background: #1e293b; border-color: #334155; }
         .product-info h4 { color: white; }
     }
+	
+	/* --- PARALLAX & SOFTENING STYLES --- */
+.merch-parallax-header {
+    position: relative;
+    height: 70vh; /* Slightly taller for better parallax display */
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.video-parallax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* Taller than header to allow for movement */
+    z-index: 1;
+    will-change: transform;
+}
+
+.parallax-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay-softened {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Replicating the exact brand gradient and blur from index.html */
+    background: linear-gradient(135deg, rgba(0,0,255,0.85), rgba(6,182,212,0.75)); 
+    backdrop-filter: blur(3px); /* The "softening" effect */
+    z-index: 2;
+}
+
+.hero-content-v2 {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    color: white;
+}
+
+.hero-content-v2 h1 {
+    font-size: 3.5rem;
+    color: white;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    margin: 15px 0;
+}
+
+.badge {
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    background: rgba(255,255,255,0.1);
+    display: inline-block;
+}
+
+/* --- THE PARALLAX SCRIPT (Add to bottom of file) --- */
+	
     </style>
 </head>
 <body>
@@ -124,18 +189,21 @@
         </div>
     </nav>
 
-    <header class="merch-hero">
-        <div class="container">
-            <span style="border: 1px solid #06b6d4; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; background: rgba(6, 182, 212, 0.1); margin-bottom: 20px; display: inline-block; color: #06b6d4; font-weight: bold;">
-                The Future of Networking
-            </span>
-            <h1>One Tap. Infinite Connections.</h1>
-            <p>Ditch the paper business cards. We design and 3D-print custom, NFC-enabled keychains for your brand. Just tap it to any smartphone to instantly share your digital life.</p>
-            
-            <a href="https://your-shopify-store-link.com" class="btn" style="margin-top: 10px; font-size: 1.1rem; padding: 15px 35px;">Shop Custom Keychains</a>
-            <p style="margin-top: 15px; font-size: 0.85rem; color: #64748b;">No apps required. Works with all modern smartphones.</p>
-        </div>
-    </header>
+<header class="merch-parallax-header">
+    <div class="video-parallax">
+        <video autoplay muted loop playsinline class="parallax-video">
+            <source src="assets/nfc-hero-loop.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay-softened"></div>
+    </div>
+
+    <div class="container hero-content-v2">
+        <span class="badge">Designed & Printed in Huntington Beach</span>
+        <h1>Physical Tech for Digital Growth</h1>
+        <p>One tap. Infinite connections. Custom 3D-printed NFC keychains for the modern business.</p>
+        <a href="https://your-shopify-store-link.com" class="btn">Shop the Collection</a>
+    </div>
+</header>
 
     <section class="features-section">
         <div class="container">
@@ -298,6 +366,12 @@
                 });
             }
         });
+		window.addEventListener('scroll', function() {
+    const distance = window.scrollY;
+    const parallax = document.querySelector('.video-parallax');
+    // Adjust the 0.3 to change the speed of the parallax effect
+    parallax.style.transform = `translateY(${distance * 0.3}px)`;
+});
     </script>
 </body>
 </html>
